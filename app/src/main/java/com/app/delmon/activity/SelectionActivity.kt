@@ -54,10 +54,11 @@ class SelectionActivity : AppCompatActivity() {
     private fun setLocale(lang: String) {
         Log.d("TAG", "setLocale: $lang")
         val language = Locale(lang)
+        Locale.setDefault(language)
         val res: Resources = resources
         val dm: DisplayMetrics = res.displayMetrics
         val conf: Configuration = res.configuration
-        conf.locale = language
+        conf.setLocale(language)
         res.updateConfiguration(conf, dm)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             res.configuration.setLayoutDirection(language)

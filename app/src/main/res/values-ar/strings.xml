@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">دلمون</string>
-    <string name="pemitmanually">السماح يدويا</string>
-    <string name="cancel">الغاءl</string>
+    <string name="permit_manually">السماح يدويا</string>
+    <string name="cancel">الغاء</string>
     <string name="choose_your_option">إختر من الاسفل خيارك</string>
     <string name="gallery">الاستديو</string>
     <string name="camera">الكاميرا</string>

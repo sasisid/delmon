@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Delmon</string>
-    <string name="pemitmanually">Permit Manually</string>
-    <string name="cancel">Cancel</string>
-    <string name="choose_your_option">Choose Your Option</string>
-    <string name="gallery">Gallery</string>
-    <string name="camera">Camera</string>
-    <string name="no_internet_connection">No Internet Connection.. Please Try Again..</string>
-    <string name="time_out_error">TimeOut Error Please Try Again..</string>
-    <string name="session_expired">Session Expired. Login to continue</string>
-    <string name="server_error">Server Error.. Please Try Again..</string>
-    <string name="network_error">Network Error.. Please Try Again..</string>
-    <string name="parsing_error">Parse Error.. Please Try Again..</string>
-    <string name="permission_failed_error">You failed to give some permission, You can enable it in settings to proceed further.</string>
+    <string name="app_name">डेलमोन</string>
+    <string name="permit_manually">अनुमति मैन्युअली दें</string>
+    <string name="cancel">रद्द करें</string>
+    <string name="choose_your_option">अपना विकल्प चुनें</string>
+    <string name="gallery">गैलरी</string>
+    <string name="camera">कैमरा</string>
+    <string name="no_internet_connection">इंटरनेट कनेक्शन नहीं है... कृपया पुनः प्रयास करें</string>
+    <string name="time_out_error">समय समाप्त त्रुटि, कृपया पुनः प्रयास करें</string>
+    <string name="session_expired">सत्र समाप्त हो गया है। जारी रखने के लिए लॉगिन करें</string>
+    <string name="server_error">सर्वर त्रुटि... कृपया पुनः प्रयास करें</string>
+    <string name="network_error">नेटवर्क त्रुटि... कृपया पुनः प्रयास करें</string>
+    <string name="parsing_error">पार्स त्रुटि... कृपया पुनः प्रयास करें</string>
+    <string name="permission_failed_error">आप कुछ अनुमति देने में असफल रहे, आगे बढ़ने के लिए इसे सेटिंग में सक्षम कर सकते हैं।</string>
     <string name="map_api_key">AIzaSyA4RBfnVNqTWspqevUPtYdrCdwySQhwmRU</string>
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="menu_dashboard">Home</string>
