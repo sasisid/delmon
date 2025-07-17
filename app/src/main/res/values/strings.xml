@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Delmon</string>
-    <string name="pemitmanually">Permit Manually</string>
+    <string name="permit_manually">Permit Manually</string>
     <string name="cancel">Cancel</string>
     <string name="choose_your_option">Choose Your Option</string>
     <string name="gallery">Gallery</string>

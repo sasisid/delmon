@@ -327,7 +327,7 @@ class SharedHelper(context: Context) {
             """.trimIndent()
         )
         builder.setCancelable(false)
-        builder.setPositiveButton(contextt.getString(R.string.pemitmanually),
+        builder.setPositiveButton(contextt.getString(R.string.permit_manually),
             DialogInterface.OnClickListener { dialog, which ->
                 dialog.dismiss()
                 val intent = Intent()
