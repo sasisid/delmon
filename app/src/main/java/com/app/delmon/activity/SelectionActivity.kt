@@ -24,9 +24,9 @@ class SelectionActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setLocale("ar")
         binding = ActivitySelectionBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setLocale("ar")
 
         sharedHelper= SharedHelper(this)
 
