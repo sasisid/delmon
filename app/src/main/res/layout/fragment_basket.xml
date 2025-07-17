@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragment.BasketFragment">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/materialToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="@color/secondary_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="10dp"
+            android:id="@+id/back"
+            android:src="@drawable/white_back_arrow" />
+
+        <TextView
+            android:id="@+id/page_title"
+            style="@style/medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="@string/basket"
+            android:textColor="@color/white"
+            android:textSize="20dp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="10dp"
+            android:src="@drawable/icon_ionic_ios_notifications_outline"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/basket"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="10dp"
+            android:src="@drawable/basket"
+            android:visibility="gone" />
+
+
+    </com.google.android.material.appbar.MaterialToolbar>
+
+    <TextView
+        android:id="@+id/our_basket"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/our_basket"
+        android:textAlignment="center"
+        style="@style/medium"
+        android:textSize="15dp"
+        android:textColor="@color/black"
+        android:paddingVertical="10dp"
+        app:layout_constraintWidth_percent=".5"
+        app:layout_constraintEnd_toStartOf="@+id/customised_basket"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/materialToolbar" />
+
+    <View
+        android:layout_width="41dp"
+        android:layout_height="11dp"
+        android:id="@+id/view1"
+        android:background="@drawable/secondary_radius"
+        app:layout_constraintEnd_toEndOf="@+id/our_basket"
+        app:layout_constraintStart_toStartOf="@+id/our_basket"
+        app:layout_constraintTop_toBottomOf="@+id/our_basket" />
+
+    <TextView
+        android:id="@+id/customised_basket"
+        android:layout_width="0dp"
+        android:textAlignment="center"
+        android:paddingVertical="10dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintWidth_percent=".5"
+        style="@style/medium"
+        android:textSize="15dp"
+        android:textColor="@color/black"
+        android:text="@string/customised_basket"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/materialToolbar" />
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="41dp"
+        android:layout_height="11dp"
+        android:visibility="gone"
+        android:background="@drawable/secondary_radius"
+        app:layout_constraintEnd_toEndOf="@+id/customised_basket"
+        app:layout_constraintStart_toEndOf="@+id/our_basket"
+        app:layout_constraintTop_toBottomOf="@+id/our_basket" />
+
+    <TextView
+        android:id="@+id/textView4"
+        style="@style/semi_bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/our_basket_list"
+        android:visibility="gone"
+        android:textColor="@color/black"
+        android:textSize="15dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view1" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/custom_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/new_basket"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/custom_basket_recyc"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/our_basket_recyc"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.core.widget.NestedScrollView>
+
+    <TextView
+        android:id="@+id/new_basket"
+        style="@style/semi_bold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/edittext_rectangle"
+        android:backgroundTint="@color/secondary_color"
+        android:drawablePadding="10dp"
+        android:gravity="center"
+        android:paddingVertical="20dp"
+        android:text="@string/add_new_basket"
+        android:textColor="@color/white"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "633717232073",
+    "project_id": "delmon-718d9",
+    "storage_bucket": "delmon-718d9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:633717232073:android:4da90bf9f921a4dc37d818",
+        "android_client_info": {
+          "package_name": "com.app.delmon"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "633717232073-mv2dvlaf1qjlcvoa8tprkdt8ftj2j1n1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.delmon",
+            "certificate_hash": "d7a0f1877b950d990734d04fbc96c3b50d21b697"
+          }
+        },
+        {
+          "client_id": "633717232073-198m19qfu9m79jn8mdl4ic5bn8lshsfb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4RBfnVNqTWspqevUPtYdrCdwySQhwmRU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "633717232073-198m19qfu9m79jn8mdl4ic5bn8lshsfb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

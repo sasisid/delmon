@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph.xml"
+    app:startDestination="@id/home_fragment">
+    <fragment
+        android:id="@+id/home_fragment"
+        android:name="com.app.delmon.fragment.HomeFragment"
+        android:label="poultry_dash"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_orderFragment"
+            app:destination="@id/order_fragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_categoryFragment"
+            app:destination="@id/category_fragment" />
+        <action
+            android:id="@+id/action_home_fragment_to_productSearchFragment"
+            app:destination="@id/productSearchFragment" />
+        <action
+            android:id="@+id/action_home_fragment_to_basketFragment"
+            app:destination="@id/basketFragment" />
+        <action
+            android:id="@+id/action_home_fragment_to_product_details_fragment"
+            app:destination="@id/product_details_fragment" />
+        <action
+            android:id="@+id/action_home_fragment_to_luckyWheelFragment"
+            app:destination="@id/luckyWheelFragment" />
+        <action
+            android:id="@+id/action_home_fragment_to_paymentFragment"
+            app:destination="@id/paymentFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/order_fragment"
+        android:name="com.app.delmon.fragment.OrderFragment"
+        android:label="Order"
+        tools:layout="@layout/fragment_order" >
+        <action
+            android:id="@+id/action_orderFragment_to_receipesFragment"
+            app:destination="@id/category_fragment" />
+        <action
+            android:id="@+id/action_order_fragment_to_login_fragment"
+            app:destination="@id/login_fragment"
+            app:popUpTo="@id/home_fragment"
+            app:popUpToInclusive="false" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/receipes_fragment"
+        android:name="com.app.delmon.fragment.RecipesFragment"
+        android:label="Recipes"
+        tools:layout="@layout/fragment_recipes" >
+        <action
+            android:id="@+id/action_receipes_fragment_to_recipiesDetailsFragment"
+            app:destination="@id/recipiesDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/cart_fragment"
+        android:name="com.app.delmon.fragment.CartFragment"
+        android:label="Cart"
+        tools:layout="@layout/fragment_cart" >
+        <action
+            android:id="@+id/action_cartFragment_to_profileFragment"
+            app:destination="@id/profile_fragment" />
+        <action
+            android:id="@+id/action_cart_fragment_to_addressFragment"
+            app:destination="@id/addressFragment" />
+        <action
+            android:id="@+id/action_cart_fragment_to_login_fragment"
+            app:destination="@id/login_fragment"
+            app:popUpTo="@id/home_fragment"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_cart_fragment_to_home_fragment"
+            app:destination="@id/home_fragment" />
+        <action
+            android:id="@+id/action_cart_fragment_to_payment_fragment"
+            app:destination="@id/paymentFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/profile_fragment"
+        android:name="com.app.delmon.fragment.ProfileFragment"
+        android:label="Profile"
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_typeofaccountFragment"
+            app:destination="@id/type_of_account_fragment" />
+        <action
+            android:id="@+id/action_profile_fragment_to_feedback_fragment"
+            app:destination="@id/feedback_fragment"
+             />
+        <action
+            android:id="@+id/action_profile_fragment_to_helpsupport_fragment"
+            app:destination="@id/helpsupport_fragment"
+            app:enterAnim="@anim/screen_in"
+            app:exitAnim="@anim/screen_out" />
+        <action
+            android:id="@+id/action_profile_fragment_to_settings_fragment"
+            app:destination="@id/settings_fragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_out_left" />
+        <action
+            android:id="@+id/action_profile_fragment_to_editProfileFragment"
+            app:destination="@id/editProfileFragment"
+            app:enterAnim="@anim/nav_default_pop_enter_anim"
+            app:exitAnim="@animator/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_profile_fragment_to_loyaltyFragment"
+            app:destination="@id/loyaltyFragment"
+            app:enterAnim="@anim/slide_in_from_bottom"
+            app:exitAnim="@anim/slide_down_to_bottom" />
+        <action
+            android:id="@+id/action_profile_fragment_to_walletFragment"
+            app:destination="@id/walletFragment" />
+        <action
+            android:id="@+id/action_profile_fragment_to_addressFragment"
+            app:destination="@id/addressFragment" />
+        <action
+            android:id="@+id/action_profile_fragment_to_favouritesFragment"
+            app:destination="@id/favouritesFragment" />
+        <action
+            android:id="@+id/action_profile_fragment_to_login_fragment"
+            app:destination="@id/login_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/category_fragment"
+        android:name="com.app.delmon.fragment.CategoryFragment"
+        android:label="Category"
+        tools:layout="@layout/fragment_category" >
+        <action
+            android:id="@+id/action_categoryFragment_to_productDetailFragment"
+            app:destination="@id/product_details_fragment" />
+        <action
+            android:id="@+id/action_category_fragment_to_cart_fragment"
+            app:destination="@id/cart_fragment" />
+        <action
+            android:id="@+id/action_category_fragment_to_login_fragment"
+            app:destination="@id/login_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/product_details_fragment"
+        android:name="com.app.delmon.fragment.ProductDetailsFragment"
+        android:label="product_details"
+        tools:layout="@layout/fragment_product_details" >
+        <action
+            android:id="@+id/action_product_details_fragment_to_login_fragment"
+            app:destination="@id/login_fragment" />
+        <action
+            android:id="@+id/action_product_details_fragment_to_recipiesDetailsFragment"
+            app:destination="@id/recipiesDetailsFragment" />
+        <action
+            android:id="@+id/action_product_details_fragment_to_cart_fragment"
+            app:destination="@id/cart_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/type_of_account_fragment"
+        android:name="com.app.delmon.fragment.TypeofAccountFragment"
+        android:label="account_type"
+        tools:layout="@layout/fragment_typeof" >
+        <action
+            android:id="@+id/action_typeofaccountFragment_to_loginFragment"
+            app:destination="@id/login_fragment" />
+        <action
+            android:id="@+id/action_type_of_account_fragment_to_otp_fragment"
+            app:destination="@id/otp_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/login_fragment"
+        android:name="com.app.delmon.fragment.LoginFragment"
+        android:label="login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_otpFragment"
+            app:destination="@id/otp_fragment" />
+        <action
+            android:id="@+id/action_login_fragment_to_type_of_account_fragment"
+            app:destination="@id/type_of_account_fragment" />
+        <action
+            android:id="@+id/action_login_fragment_self"
+            app:destination="@id/login_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/otp_fragment"
+        android:name="com.app.delmon.fragment.OtpFragment"
+        android:label="otp"
+        tools:layout="@layout/fragment_otp" >
+        <action
+            android:id="@+id/action_otpFragment_to_profileFragment"
+            app:destination="@id/profile_fragment"
+            app:popUpToInclusive="false"/>
+        <action
+            android:id="@+id/action_otp_fragment_to_home_fragment"
+            app:destination="@id/home_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/feedback_fragment"
+        android:name="com.app.delmon.fragment.FeedbackFragment"
+        android:label="otp"
+        tools:layout="@layout/fragment_feedback" >
+
+    </fragment>
+    <fragment
+        android:id="@+id/helpsupport_fragment"
+        android:name="com.app.delmon.fragment.HelpSupportFragment"
+        android:label="Help"
+        tools:layout="@layout/fragment_help_support" >
+    </fragment>
+    <fragment
+        android:id="@+id/settings_fragment"
+        android:name="com.app.delmon.fragment.SettingsFragment"
+        android:label="Settings"
+        tools:layout="@layout/fragment_settings" >
+        <action
+            android:id="@+id/action_settings_fragment_self"
+            app:destination="@id/settings_fragment"
+            app:popUpTo="@id/profile_fragment" />
+        <action
+            android:id="@+id/action_settings_fragment_to_commonsettings_fragment"
+            app:destination="@id/commonsettings_fragment"
+            app:enterAnim="@anim/enter_from_left"
+            app:exitAnim="@anim/exit_out_right" />
+        <action
+            android:id="@+id/action_settings_fragment_to_webAppsFragment"
+            app:destination="@id/webAppsFragment"
+            app:enterAnim="@anim/enter_from_left"
+            app:exitAnim="@anim/exit_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/commonsettings_fragment"
+        android:name="com.app.delmon.fragment.CommonSettingsFragment"
+        android:label="Settings"
+        tools:layout="@layout/fragment_common_settings" >
+    </fragment>
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.app.delmon.fragment.EditProfileFragment"
+        android:label="fragment_edit_profile"
+        tools:layout="@layout/fragment_edit_profile" />
+    <fragment
+        android:id="@+id/loyaltyFragment"
+        android:name="com.app.delmon.fragment.LoyaltyFragment"
+        android:label="fragment_loyalty"
+        tools:layout="@layout/fragment_loyalty" />
+    <fragment
+        android:id="@+id/walletFragment"
+        android:name="com.app.delmon.fragment.WalletFragment"
+        android:label="fragment_wallet"
+        tools:layout="@layout/fragment_wallet" >
+        <action
+            android:id="@+id/action_walletFragment_to_paymentFragment"
+            app:destination="@id/paymentFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addressFragment"
+        android:name="com.app.delmon.fragment.AddressFragment"
+        android:label="fragment_address"
+        tools:layout="@layout/fragment_address" >
+        <action
+            android:id="@+id/action_addressFragment_to_searchAddressFragment"
+            app:destination="@id/searchAddressFragment" />
+        <action
+            android:id="@+id/action_addressFragment_to_cart_fragment"
+            app:destination="@id/cart_fragment" />
+        <action
+            android:id="@+id/action_addressFragment_to_addressMapFragment"
+            app:destination="@id/addressMapFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/favouritesFragment"
+        android:name="com.app.delmon.fragment.FavouritesFragment"
+        android:label="fragment_favourites"
+        tools:layout="@layout/fragment_favourites" >
+        <action
+            android:id="@+id/action_favouritesFragment_to_product_details_fragment"
+            app:destination="@id/product_details_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/recipiesDetailsFragment"
+        android:name="com.app.delmon.fragment.RecipiesDetailsFragment"
+        android:label="fragment_recipies_details"
+        tools:layout="@layout/fragment_recipies_details" />
+    <fragment
+        android:id="@+id/searchAddressFragment"
+        android:name="com.app.delmon.fragment.SearchAddressFragment"
+        android:label="fragment_search_address"
+        tools:layout="@layout/fragment_search_address" >
+        <action
+            android:id="@+id/action_searchAddressFragment_to_addressMapFragment"
+            app:destination="@id/addressMapFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addressMapFragment"
+        android:name="com.app.delmon.fragment.AddressMapFragment"
+        android:label="fragment_address_map"
+        tools:layout="@layout/fragment_address_map" >
+        <action
+            android:id="@+id/action_addressMapFragment_to_addressFragment"
+            app:destination="@id/addressFragment" />
+        <action
+            android:id="@+id/action_addressMapFragment_to_searchAddressFragment"
+            app:destination="@id/searchAddressFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/productSearchFragment"
+        android:name="com.app.delmon.fragment.ProductSearchFragment"
+        android:label="fragment_product_search"
+        tools:layout="@layout/fragment_product_search" >
+        <action
+            android:id="@+id/action_productSearchFragment_to_product_details_fragment2"
+            app:destination="@id/product_details_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/basketFragment"
+        android:name="com.app.delmon.fragment.BasketFragment"
+        android:label="fragment_basket"
+        tools:layout="@layout/fragment_basket" >
+        <action
+            android:id="@+id/action_basketFragment_to_basketProductListFragment"
+            app:destination="@id/basketProductListFragment" />
+        <action
+            android:id="@+id/action_basketFragment_to_login_fragment"
+            app:destination="@id/login_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/basketProductListFragment"
+        android:name="com.app.delmon.fragment.BasketProductListFragment"
+        android:label="fragment_basket_product_list"
+        tools:layout="@layout/fragment_basket_product_list" >
+        <action
+            android:id="@+id/action_basketProductListFragment_to_product_details_fragment"
+            app:destination="@id/product_details_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/webAppsFragment"
+        android:name="com.app.delmon.fragment.WebAppsFragment"
+        android:label="fragment_web_apps"
+        tools:layout="@layout/fragment_web_apps" />
+    <fragment
+        android:id="@+id/luckyWheelFragment"
+        android:name="com.app.delmon.fragment.LuckyWheelFragment"
+        android:label="LuckyWheelFragment" />
+    <fragment
+        android:id="@+id/paymentFragment"
+        android:name="com.app.delmon.fragment.PaymentFragment"
+        android:label="fragment_payment"
+        tools:layout="@layout/fragment_payment" >
+        <action
+            android:id="@+id/action_paymentFragment_to_order_fragment"
+            app:destination="@id/order_fragment" />
+        <action
+            android:id="@+id/action_paymentFragment_to_walletFragment"
+            app:destination="@id/walletFragment" />
+    </fragment>
+
+</navigation>

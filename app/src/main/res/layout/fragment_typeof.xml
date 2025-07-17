@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.TypeofAccountFragment">
+
+    <TextView
+        android:id="@+id/textView7"
+        style="@style/semi_bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="140dp"
+        android:text="@string/type_of_acc"
+        android:textColor="@color/black"
+        android:textSize="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/desc"
+        style="@style/regular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/dummy_tittle"
+        android:textColor="@color/text_grey"
+        android:textSize="15dp"
+        android:textAlignment="center"
+        android:paddingHorizontal="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView7" />
+
+    <TextView
+        android:id="@+id/normal_user"
+        style="@style/medium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/normal_user"
+        android:textSize="15dp"
+        android:paddingHorizontal="25dp"
+        android:textAlignment="center"
+        android:paddingVertical="25dp"
+        android:textColor="@color/black"
+        android:background="@drawable/rectangle_border"
+        android:backgroundTint="#F0F0F4"
+        android:drawableStart="@drawable/grey_checkbox"
+        android:layout_marginHorizontal="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/desc" />
+    <TextView
+        android:id="@+id/merchant"
+        style="@style/medium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/merchants"
+        android:textSize="15dp"
+        android:paddingHorizontal="25dp"
+        android:textAlignment="center"
+        android:paddingVertical="25dp"
+        android:textColor="@color/black"
+        android:background="@drawable/rectangle_border"
+        android:backgroundTint="#F0F0F4"
+        android:drawableStart="@drawable/grey_checkbox"
+        android:layout_marginHorizontal="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/normal_user" />
+    <TextView
+        android:id="@+id/employees"
+        style="@style/medium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/employess"
+        android:textSize="15dp"
+        android:paddingHorizontal="25dp"
+        android:textAlignment="center"
+        android:paddingVertical="25dp"
+        android:textColor="@color/black"
+        android:background="@drawable/rectangle_border"
+        android:backgroundTint="#F0F0F4"
+        android:drawableStart="@drawable/grey_checkbox"
+        android:layout_marginHorizontal="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/merchant" />
+    <include
+        android:id="@+id/input_layout"
+        layout="@layout/account_child_card"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,80 @@
+package com.app.delmon.Model
+
+data class OrderListResponse(
+    var `data`: List<OrderData>? = null,
+    var success: Boolean? = null,
+    var message: String? = null,
+    var deliveryTime: String? = null,
+    var currentTime: String? = null,
+    var productDetails: ArrayList<ProductData>? = null,
+    var billDetails: ArrayList<Any>? = null
+) {
+    data class OrderData(
+        var id: String? = null,
+        var userId: String? = null,
+        var productId: String? = null,
+        var deliveryAddressId: Int? = null,
+        var deliveryAddress: DeliveryAddress? = null,
+        var deliveryAddressType: String? = null,
+        var netAmount: String? = null,
+        var discount: String? = null,
+        var couponName: String? = null,
+        var orderReferenceId: String? = null,
+        var paymentTypeId: String? = null,
+        var orderStatus: String? = null,
+        var orderPlaceTime: String? = null,
+        var deliveredTime: String? = null,
+        var deliveryCharge: String? = null,
+        var createdAt: String? = null,
+        var updatedAt: String? = null,
+        var addressName: String? = null,
+        var cartId: String? = null,
+        var vat: String? = null,
+        var addressType: String? = null,
+        var priceDetails: String? = null,
+        var outForDeliveryTime: String? = null,
+        var couponId: String? = null,
+        var latitude: String? = null,
+        var longitude: String? = null,
+        var refundStatus: String? = null,
+        var isReviewed: String? = null,
+        var order: ArrayList<Any>? = null,
+        var cancelTime: String? = null,
+        var pickupAddress: String? = null,
+        var deliveryBoyId: String? = null,
+        var unAvailableTime: String? = null,
+        var returnStatus: String? = null,
+        var deliveryType: String? = null,
+        var deliveryDate: String? = null,
+        var deliveryNotes: String? = null,
+        var approveTime: String? = null,
+        var couponAmount: String? = null,
+        var userStatus: String? = null,
+        var isLoyaltyPointApply: String? = null,
+        var newDeliveryDate: String? = null,
+        var cartDetails: ArrayList<CartResponseNew.Data>? = null,
+        var orderId: String? = null
+    )
+    data class DeliveryAddress(
+        var active: Int? = null,
+        var address: String? = null,
+        var area: String? = null,
+        var buildingName: String? = null,
+        var createdAt: String? = null,
+        var id: Int? = null,
+        var landmark: String? = null,
+        var latitude: String? = null,
+        var longitude: String? = null,
+        var saveAs: String? = null,
+        var updatedAt: String? = null,
+        var userId: Int? = null
+    )
+    data class ProductData(
+        var vat: String? = null,
+        var enProductName: String? = null,
+        var arProductName: String? = null,
+        var weight: String? = null,
+        var price: Double? = 0.0,
+        var id: String? = null
+    )
+}
