@@ -14,6 +14,7 @@ import com.app.delmon.interfaces.DialogCallBack
 import com.app.delmon.interfaces.OnClickListnereWithType
 import com.app.delmon.utils.BaseUtils
 import com.app.delmon.utils.DialogUtils
+import java.util.Locale
 
 class OrderListAdapter(
     var context: Context, var list: List<OrderListResponse.OrderData>,
@@ -127,7 +128,7 @@ class OrderListAdapter(
                 holder.binding.placedDate.text = BaseUtils.getFormatedDateUtc(list[position].orderPlaceTime!!,"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'","dd/MM/yyyy")
             }
         }*/
-        holder.binding.amt.text = String.format("%.2f", list[position].netAmount!!.toDouble())+" BD"
+        holder.binding.amt.text = String.format(Locale.US,"%.2f", list[position].netAmount!!.toDouble())+" BD"
         holder.binding.orderDetails.setOnClickListener {
             val intent = Intent(context, OrderDetailsActivity::class.java)
             intent.putExtra("key",list[position].id.toString())

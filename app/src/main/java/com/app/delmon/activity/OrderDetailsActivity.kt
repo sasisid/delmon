@@ -64,7 +64,7 @@ class OrderDetailsActivity : AppCompatActivity() {
 //                        val jObjResponse =
 //                            JSONObject(java.lang.String.valueOf(it.data!![0].deliveryAddress.getJSONObject()))
 
-                        binding.address.text = it.data!![0].deliveryAddress!!.area.toString()+"  "+it.data!![0].deliveryAddress!!.address.toString()
+                        binding.address.text = it.data!![0].deliveryAddress?.area ?: "" +"  "+it.data!![0].deliveryAddress?.address ?: ""
 
                         binding.deliveryLable.text = "Delivery Address"
                     }

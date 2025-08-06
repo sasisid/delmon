@@ -12,7 +12,7 @@
     <string name="network_error">Network Error.. Please Try Again..</string>
     <string name="parsing_error">Parse Error.. Please Try Again..</string>
     <string name="permission_failed_error">You failed to give some permission, You can enable it in settings to proceed further.</string>
-    <string name="map_api_key">AIzaSyA4RBfnVNqTWspqevUPtYdrCdwySQhwmRU</string>
+    <string name="map_api_key">AIzaSyDJkkEVjbiTj-xMGkCafmoE4DmXYdRLgS0</string>
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="menu_dashboard">Home</string>
     <string name="menu_order">Orders</string>
@@ -24,12 +24,12 @@
     <string name="back">Back</string>
     <string name="title_onboarding_1">onboard1</string>
     <string name="description_onboarding_1">Onboard1desc</string>
-    <string name="dummy_tittle">Lorem Ipsum is simply dummy text of the printing</string>
-    <string name="dummy_desc">Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a</string>
+    <string name="dummy_tittle"></string>
+    <string name="dummy_desc"></string>
     <string name="skip">Skip</string>
     <string name="exit_press_back_twice_message">Press Back again to Exit</string>
     <string name="what_are_you_looking">What are your looking For ?</string>
-    <string name="Select_desc">Lorem Ipsum has been the industry\'s standard dummy text</string>
+    <string name="Select_desc"></string>
     <string name="poultry">Poultry</string>
     <string name="feeding">Feeding</string>
     <string name="getin">Get In</string>
@@ -100,7 +100,7 @@
     <string name="select">Select</string>
     <string name="mobile_notification">Mobile Notification</string>
     <string name="tittle">Title</string>
-    <string name="about_content">Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a</string>
+    <string name="about_content"></string>
     <string name="email_notification">Email Notification</string>
     <string name="edit_profile">EditProfile</string>
     <string name="email">Email</string>
@@ -252,7 +252,16 @@
     <string name="cart_limit_two">cartons exceeds both your daily limit of</string>
     <string name="cart_limit_three">cartons and your available limit of</string>
     <string name="cart_limit_four">cartons. Please reduce your cart to meet these limits before proceeding with your order.</string>
+    <string name="onboarding_title_1">Order from a wide selection of high-quality Chicken and Bird Feed.</string>
+    <string name="onboarding_desc_1">Shop with confidence knowing our products are high-quality and safe for your chickens and its feeding.</string>
 
+    <string name="onboarding_title_2">Enjoy doorstep delivery for added convenience</string>
+    <string name="onboarding_desc_2">Our door delivery service provides added convenience by delivering the products directly to your doorstep, or you can choose to collect at a location convenient for you.</string>
+
+    <string name="onboarding_title_3">Enjoy Merchant benefits for bulk orders.</string>
+    <string name="onboarding_desc_3">Our Chicken and Bird Feeding app makes it easy for merchants to order their feed and supplies right from their mobile devices</string>
+    <string name="enter_phone_number">Enter Phone Number</string>
+    <string name="loyalty">Loyality Amount</string>
 
     <string-array name="default_amount">
         <item>50</item>

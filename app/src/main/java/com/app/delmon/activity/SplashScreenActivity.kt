@@ -11,6 +11,7 @@ import com.app.delmon.R
 import com.app.delmon.Session.SharedHelper
 import com.app.delmon.utils.BaseUtils
 import com.app.delmon.utils.Constants
+import com.app.delmon.utils.LanguageManager
 
 class SplashScreenActivity : AppCompatActivity() {
 
@@ -19,14 +20,13 @@ class SplashScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
-
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         WindowCompat.setDecorFitsSystemWindows(window, false)
         sharedHelper= SharedHelper(this)
+        LanguageManager.changeLanguage(this,sharedHelper.language)
         Constants.User.isLoggedIn = sharedHelper.loggedIn
          Constants.User.token = sharedHelper.token
          Constants.User.usertype = sharedHelper.userType
-        BaseUtils.setLocale("ar",this)
 
         Handler(Looper.getMainLooper()).postDelayed({
             if( sharedHelper.loggedIn) {

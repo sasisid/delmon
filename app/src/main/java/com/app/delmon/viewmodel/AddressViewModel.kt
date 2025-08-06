@@ -30,9 +30,13 @@ class AddressViewModel: ViewModel(){
         val header: MutableMap<String, String> = HashMap()
         header[Constants.ApiKeys.LANG] = Constants.User.language
         header["Authorization"] = "Bearer "+Constants.User.token
-        header["type"] = Constants.User.usertype
-        if (Constants.User.id != 0 ){
-            header["userId"] = Constants.User.id.toString()
+//        if (Constants.User.id != 0 ){
+//            header["userId"] = Constants.User.id.toString()
+//        }
+        if (Constants.User.apptype == 1 ){
+            header["type"] = "POULTRY"
+        }else{
+            header["type"] = "FEEDING"
         }
         val apiInputs = ApiInput()
         apiInputs.context = context

@@ -26,6 +26,7 @@ import com.app.delmon.databinding.FragmentHomeBinding
 import com.app.delmon.interfaces.OnClickListener
 import com.app.delmon.interfaces.OnclickTwoPositionListner
 import com.app.delmon.utils.DialogUtils
+import com.app.delmon.utils.LanguageManager
 import com.app.delmon.utils.LottieLoader
 import com.app.delmon.utils.UiUtils
 import com.app.delmon.viewmodel.HomeViewModel
@@ -65,9 +66,7 @@ class HomeFragment : Fragment() {
         binding.basket.setOnClickListener {
             findNavController().navigate(R.id.action_home_fragment_to_basketFragment)
         }
-        binding.back.setOnClickListener {
-            findNavController().popBackStack()
-        }
+
         binding.SpinWheel.setOnClickListener {
             findNavController().navigate(R.id.action_home_fragment_to_luckyWheelFragment)
         }

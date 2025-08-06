@@ -26,7 +26,6 @@ import com.mastercard.gateway.android.sdk.GatewayAPI
 import com.mastercard.gateway.android.sdk.GatewayCallback
 import com.mastercard.gateway.android.sdk.GatewayMap
 import com.mastercard.gateway.android.sdk.Session
-import com.stripe.android.view.CardInputWidget
 import org.json.JSONObject
 
 

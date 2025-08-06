@@ -81,7 +81,7 @@
             android:textColor="@color/black"
             android:textSize="15dp"
             android:maxLength="8"
-            android:hint="Enter Phone Number"
+            android:hint="@string/enter_phone_number"
             android:textColorHint="@color/quantum_grey400"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/cCode"

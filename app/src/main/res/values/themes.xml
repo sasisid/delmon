@@ -48,20 +48,20 @@
     </style>
 
     <style name="bold">
-        <item name="fontFamily">@font/poppins_medium</item>
+        <item name="fontFamily">@font/cairo_bold</item>
     </style>
 
     <style name="semi_bold">
-        <item name="fontFamily">@font/poppins_semibold</item>
+        <item name="fontFamily">@font/cairo_semibold</item>
     </style>
 
     <style name="medium">
-        <item name="fontFamily">@font/poppins_medium</item>
+        <item name="fontFamily">@font/cairo_medium</item>
         <item name="android:textSize">15sp</item>
     </style>
 
     <style name="regular">
-        <item name="fontFamily">@font/poppins_regular</item>
+        <item name="fontFamily">@font/cairo_regular</item>
     </style>
 
     <style name="ThemeOverlay.Delmon.FullscreenContainer" parent="">

@@ -20,18 +20,18 @@ class OnboardingAdapter(manager: FragmentManager,
     override fun getItem(position: Int): Fragment {
         return when (position) {
             0 -> OnboardingFragment1.newInstance(
-                "Order from a wide selection of high-quality Chicken and Bird Feed.",
-                "Shop with confidence knowing our products are high-quality and safe for your chickens and its feeding.",
+                context.getString(R.string.onboarding_title_1),
+                context.getString(R.string.onboarding_desc_1),
                 R.raw.first
             )
             1 -> OnboardingFragment1.newInstance(
-                "Enjoy doorstep delivery for added convenience",
-                "Our door delivery service provides added convenience by delivering the products directly to your doorstep, or you can choose to collect at a location convenient for you.",
+                context.getString(R.string.onboarding_title_2),
+                context.getString(R.string.onboarding_desc_2),
                 R.raw.second
             )
             2 -> OnboardingFragment1.newInstance(
-                "Enjoy Merchant benefits for bulk orders.",
-                "Our Chicken and Bird Feeding app makes it easy for merchants to order their feed and supplies right from their mobile devices",
+                context.getString(R.string.onboarding_title_3),
+                context.getString(R.string.onboarding_desc_3),
                 R.raw.third
             )
             else -> null

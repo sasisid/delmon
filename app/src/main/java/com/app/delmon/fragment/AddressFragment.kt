@@ -18,6 +18,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.app.delmon.Model.AddressResponse
 import com.app.delmon.R
+import com.app.delmon.Session.SharedHelper
 import com.app.delmon.adapter.AddressAdapter
 import com.app.delmon.databinding.FragmentAddressBinding
 import com.app.delmon.interfaces.OnClickListnereWithType
@@ -44,6 +45,7 @@ class AddressFragment : Fragment() {
     var myAreaNamelist = ArrayList<String>()
     var myZoneIdlist = ArrayList<Int>()
     var myAreaIdlist = ArrayList<Int>()
+    private lateinit var sharedHelper: SharedHelper
 
     companion object{
         var from:String = ""
@@ -86,6 +88,8 @@ class AddressFragment : Fragment() {
     ): View? {
         binding = FragmentAddressBinding.inflate(inflater, container, false)
         addressViewModel = ViewModelProvider(this)[AddressViewModel::class.java]
+        sharedHelper = SharedHelper(requireContext())
+
         requireActivity().apply {
             // Redirect system "Back" press to our dispatcher
             onBackPressedDispatcher.addCallback(viewLifecycleOwner, onBackPressedCallback)
@@ -348,9 +352,16 @@ class AddressFragment : Fragment() {
                     myAreaIdlist.clear()
                     for (item in it.data!!) {
                         // body of loop
+                        val areaName = if (sharedHelper.language!="ar"){
+                            item!!.areaName!!
+                        }else{
+                            Log.d("TAG", "getArea: ${item?.arAreaName.toString()}")
 
-                        myAreaNamelist.add(item!!.areaName!!); //this adds an element to the list.
-                        myAreaIdlist.add(item.id!!)
+                            if (item?.arAreaName == null) "" else item.arAreaName!!
+
+                        }
+                        myAreaNamelist.add(areaName); //this adds an element to the list.
+                        myAreaIdlist.add(item?.id!!)
                     }
 
                     loadAreaSpinner(myAreaNamelist)
@@ -372,7 +383,12 @@ class AddressFragment : Fragment() {
 
                         for (item in it.data!!) {
                             // body of loop
-                            myZoneNamelist.add(item!!.name!!); //this adds an element to the list.
+                            val name = if (sharedHelper.language!="ar"){
+                                item!!.name!!
+                            }else{
+                                item!!.arName!!
+                            }
+                            myZoneNamelist.add(name); //this adds an element to the list.
                             myZoneIdlist.add(item.id!!)
                         }
 

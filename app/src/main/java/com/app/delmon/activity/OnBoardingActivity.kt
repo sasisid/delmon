@@ -7,8 +7,10 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import com.app.delmon.R
+import com.app.delmon.Session.SharedHelper
 import com.app.delmon.adapter.OnboardingAdapter
 import com.app.delmon.databinding.ActivityOnBoardingBinding
+import com.app.delmon.utils.LanguageManager
 import me.relex.circleindicator.CircleIndicator
 
 class OnBoardingActivity : AppCompatActivity() {
@@ -18,11 +20,14 @@ class OnBoardingActivity : AppCompatActivity() {
     private lateinit var btnNext: TextView
     private lateinit var binding: ActivityOnBoardingBinding
     lateinit var indicator: CircleIndicator
+    private lateinit var sharedHelper: SharedHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityOnBoardingBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        sharedHelper = SharedHelper(this)
+        LanguageManager.changeLanguage(this,sharedHelper.language)
 
         mViewPager = binding.viewPager
         mViewPager.adapter = OnboardingAdapter(supportFragmentManager, this)

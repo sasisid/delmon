@@ -13,7 +13,7 @@
     <string name="network_error">مشكلة بالشبكة .. الرجاء المحاولة مرة أخرى</string>
     <string name="parsing_error">خطأ في التحليل.. الرجاء المحاولة مرة أخرى..</string>
     <string name="permission_failed_error">لقد فشلت في منح بعض الإذن، يمكنك تمكينه في الإعدادات للمضي قدمًا.</string>
-    <string name="map_api_key">AIzaSyA4RBfnVNqTWspqevUPtYdrCdwySQhwmRU</string>
+    <string name="map_api_key">AIzaSyDJkkEVjbiTj-xMGkCafmoE4DmXYdRLgS0</string>
     <string name="menu_dashboard">الرئيسية</string>
     <string name="menu_order">طلباتي</string>
     <string name="menu_recipes">وصفات</string>
@@ -24,12 +24,12 @@
     <string name="back">رجوع</string>
     <string name="title_onboarding_1">onboard1</string>
     <string name="description_onboarding_1">Onboard1desc</string>
-    <string name="dummy_tittle">Lorem Ipsum is simply dummy text of the printing</string>
-    <string name="dummy_desc">Lorem Ipsum</string>
+    <string name="dummy_tittle"></string>
+    <string name="dummy_desc"></string>
     <string name="skip">تخطي</string>
     <string name="exit_press_back_twice_message">اضغط مره أخرى للرجوع</string>
     <string name="what_are_you_looking">عن ماذا تبحث؟</string>
-    <string name="Select_desc">Lorem Ipsum has been the industry\'s standard dummy text</string>
+    <string name="Select_desc"></string>
     <string name="poultry">دواجن</string>
     <string name="feeding">تغذية</string>
     <string name="getin">ابقى على تواصل</string>
@@ -52,10 +52,10 @@
     <string name="account">الحساب</string>
     <string name="login">تسجيل دخول</string>
     <string name="privacy_content"><![CDATA[بانضمامك فإنك توافق على شروط الخدمة وسياسة الخصوصية]]></string>
-    <string name="type_of_acc">نوع الحساب</string>
+    <string name="type_of_acc">الرجاء اختيار نوع الحساب الذي ستقوم بإنشاءه</string>
     <string name="normal_user">مستخدم عادي</string>
-    <string name="merchants">التجار</string>
-    <string name="employess">الموضفين</string>
+    <string name="merchants">تاجر</string>
+    <string name="employess">موظف</string>
     <string name="enter_cr_num">ادخل رقم السجل التجاري</string>
     <string name="proceed">كمل</string>
     <string name="phone_num">رقم الهاتف</string>
@@ -244,4 +244,13 @@
     <string name="cart_limit_two">تتجاوز الكراتين الحد اليومي الخاص بك</string>
     <string name="cart_limit_three">الكراتين والحد الأقصى المتاح لك</string>
     <string name="cart_limit_four">كرتون. يرجى تقليل عربة التسوق الخاصة بك لتلبية هذه الحدود قبل متابعة طلبك.</string>
+    <string name="onboarding_title_1">اطلب من مجموعة واسعة من أعلاف الدجاج والطيور عالية الجودة.</string>
+    <string name="onboarding_desc_1">كن واثقًا من أن منتجاتنا عالية الجودة وآمنة لدجاجك وتغذيته.</string>
+    <string name="onboarding_title_2">استمتع بالتوصيل حتى باب منزلك لمزيد من الراحة</string>
+    <string name="onboarding_desc_2">توفر خدمة التوصيل حتى الباب راحة إضافية من خلال توصيل المنتجات مباشرة إلى باب منزلك، أو يمكنك اختيار الاستلام في مكان مناسب لك.</string>
+    <string name="onboarding_desc_3">يسهل تطبيقنا الخاص بإطعام الدجاج والطيور على التجار طلب أعلافهم وإمداداتهم مباشرة من أجهزتهم المحمولة.</string>
+    <string name="onboarding_title_3">استمتع بمزايا التاجر للطلبات بالجملة</string>
+    <string name="enter_phone_number">رقم الهاتف</string>
+    <string name="loyalty">مبلغ الولاء</string>
+
 </resources>

@@ -86,6 +86,7 @@ class CartFragment : Fragment() {
         var maxCartonDiscountPerDay = 0
         var defaultCartonDiscount = 0
         var defaultMaxCartonDiscountPerDayUser = 0
+        var MaxCartonDiscountPerDayUser = 0
         var defaultMaxCartonDiscountPerDayEmployee = 0
         var isCardPayment = 0
         var isCod = 0
@@ -95,6 +96,9 @@ class CartFragment : Fragment() {
         var lng = ""
         var notes = ""
         var userCartonDiscount = 0
+        var empDefaultCartonDiscount = 0
+
+        var empCartonDiscount = 0
         var employeeCartonDiscount = 0
         lateinit var holidays: ArrayList<String>
 
@@ -175,7 +179,7 @@ class CartFragment : Fragment() {
 
         // Create the observer which updates the UI.
         cartPrice.observe(requireActivity()) {
-            binding.totAmt.text = String.format("%.3f", it) + " BD"
+            binding.totAmt.text = String.format(Locale.US,"%.3f", it) + " BD"
         }
 
         binding.pickup.setOnClickListener {
@@ -397,8 +401,9 @@ class CartFragment : Fragment() {
 //                            if (cartoonproducts.size > maxCartonDiscountPerDay) {
 
 //                            if(maxCartonDiscountPerDay == 0 && )
+                            cartonDiscountedCount = if (!Constants.User?.usertype.equals("EMPLOYEE") ) MaxCartonDiscountPerDayUser - userCartonDiscount else maxCartonDiscountPerDay-userCartonDiscount
 
-                            if(maxCartonDiscountPerDay == 0) {
+                            if(Constants.User?.usertype.equals("EMPLOYEE") && maxCartonDiscountPerDay == 0) {
 
                                 var discountType = if(Constants.User?.usertype.equals("EMPLOYEE") ) {
                                     defaultMaxCartonDiscountPerDayEmployee
@@ -420,7 +425,8 @@ class CartFragment : Fragment() {
                                     "Oops"
                                 )
 
-                            } else if (userCartonDiscount > maxCartonDiscountPerDay) {
+                            }
+                            else if (!Constants.User?.usertype.equals("EMPLOYEE") && MaxCartonDiscountPerDayUser<=0) {
 
                                 var discountType = if(Constants.User?.usertype.equals("EMPLOYEE") ) {
                                     defaultMaxCartonDiscountPerDayEmployee
@@ -443,7 +449,8 @@ class CartFragment : Fragment() {
                                             " $discountType " + requireContext().resources.getString(R.string.cart_limit_four),
                                     "Oops"
                                 )
-                            } else {
+                            }
+                            else {
 
                                 var limitExceed = 0
                                 var productName = ""
@@ -499,20 +506,22 @@ class CartFragment : Fragment() {
 
                                             if(binding.employeeCouponSwitch.isChecked) {
                                                 // checked
-                                                var cartoonDiscount = userCartonDiscount - maxCartonDiscountPerDay
-                                                cartonDiscountedCount = if (cartoonDiscount < 0) {
-                                                    cartoonDiscount * -1
+                                                var cartoonDiscount = empCartonDiscount - userCartonDiscount
+                                                employeeCartonDiscount = if (cartoonDiscount < 0) {
+                                                    empCartonDiscount
                                                 } else {
                                                     cartoonDiscount
                                                 }
+                                                cartonDiscountedCount = maxCartonDiscountPerDay - userCartonDiscount
+//                                                employeeCartonDiscount = cartoonDiscount
 //                                                cartonDiscountedCount = userCartonDiscount - maxCartonDiscountPerDay
                                             } else {
                                                 // not Checked
-                                                cartonDiscountedCount = maxCartonDiscountPerDay
+                                                employeeCartonDiscount = empCartonDiscount
                                             }
 
                                             Log.e("appSample", "cartonDiscountedCount: $cartonDiscountedCount")
-                                            employeeCartonDiscount = cartonDiscountedCount - userCartonDiscount
+//                                            employeeCartonDiscount = cartonDiscountedCount - userCartonDiscount
                                             DialogUtils.showLoader(requireContext())
                                             productViewModel.placeOrder(
                                                 requireContext(),
@@ -685,7 +694,7 @@ class CartFragment : Fragment() {
                             val cal = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
                             cal.add(Calendar.DATE, min)
                             val today = cal.timeInMillis
-                            val dateFormatter = SimpleDateFormat("EEEE, MMM dd, yyyy")
+                            val dateFormatter = SimpleDateFormat("EEEE, MMM dd, yyyy", Locale.ENGLISH)
                             var date = dateFormatter.format(Date(today)).toString()
                             Log.d("TAG", "onCreateView:10 min= $min max= $max $date")
                             deliveryDate = date
@@ -729,7 +738,9 @@ class CartFragment : Fragment() {
                             /*for (holiday in holidays) {
                                 Log.e("appSample", "Data: $holiday")
                             }*/
-
+                            empDefaultCartonDiscount = it.defaultCartonDiscount
+                            empCartonDiscount = it.cartonDiscount
+                            MaxCartonDiscountPerDayUser = it.maxCartonDiscountPerDayUser
                             if(isDelivery == 0 && isSelfPickup == 0) {
                                 binding.doorDelivery.visibility = View.GONE
                                 binding.pickup.visibility = View.GONE
@@ -854,7 +865,7 @@ class CartFragment : Fragment() {
         grandTotal =
             (totalAmount) + (vatAmount) + (deliveryCharge) - (loyaltyAmount + couponAmount) - employeDiscount
 
-        binding.totAmt.text = String.format("%.2f", grandTotal) + " BD"
+        binding.totAmt.text = String.format(Locale.US,"%.2f", grandTotal) + " BD"
 
         cartId = JSONArray()
         orderData = JSONArray()
@@ -866,19 +877,19 @@ class CartFragment : Fragment() {
             } else {
                 json.put("title", items.name!!)
             }
-            json.put("price", String.format("%.2f", items.totprice) + " BD")
+            json.put("price", String.format(Locale.US,"%.2f", items.totprice) + " BD")
             orderData.put(json)
         }
 
         var json = JSONObject()
-        json.put("title", "Products Amount")
-        json.put("price", String.format("%.2f", totalAmount) + " BD")
-        orderData.put(json)
+//        json.put("title", "Products Amount")
+//        json.put("price", String.format("%.2f", totalAmount) + " BD")
+//        orderData.put(json)
 
         if (vatAmount != 0.0) {
             json = JSONObject()
             json.put("title", getString(R.string.vat))
-            json.put("price", String.format("%.2f", vatAmount) + " BD")
+            json.put("price", String.format(Locale.US,"%.2f", vatAmount) + " BD")
             orderData.put(json)
         }
 
@@ -886,32 +897,32 @@ class CartFragment : Fragment() {
         if (deliveryCharge != 0.0) {
             json = JSONObject()
             json.put("title", getString(R.string.delivery_fees))
-            json.put("price", String.format("%.2f", deliveryCharge) + " BD")
+            json.put("price", String.format(Locale.US,"%.2f", deliveryCharge) + " BD")
             orderData.put(json)
         }
 
         if (isLoyaltyApply == 1) {
             json = JSONObject()
-            json.put("title", "Loyalty")
-            json.put("price", "-" + String.format("%.2f", loyaltyAmount) + " BD")
+            json.put("title", getString(R.string.loyalty))
+            json.put("price", "-" + String.format(Locale.US,"%.2f", loyaltyAmount) + " BD")
             orderData.put(json)
         }
 
         if (isCouponApply == 1) {
             json = JSONObject()
             json.put("title", getString(R.string.coupon_discount))
-            json.put("price", "-" + String.format("%.2f", couponAmount) + " BD")
+            json.put("price", "-" + String.format(Locale.US,"%.2f", couponAmount) + " BD")
             orderData.put(json)
         }
         if (employeDiscount != 0.0) {
             json = JSONObject()
             json.put("title", getString(R.string.employee_discount))
-            json.put("price", "-" + String.format("%.2f", employeDiscount) + " BD")
+            json.put("price", "-" + String.format(Locale.US,"%.2f", employeDiscount) + " BD")
             orderData.put(json)
         }
         json = JSONObject()
         json.put("title", getString(R.string.total_amount))
-        json.put("price", String.format("%.2f", grandTotal) + " BD")
+        json.put("price", String.format(Locale.US,"%.2f", grandTotal) + " BD")
         orderData.put(json)
         Log.e("fghj", "" + orderData)
 
@@ -1005,7 +1016,7 @@ class CartFragment : Fragment() {
         datePicker.show(fragment, "tag")
         datePicker.addOnPositiveButtonClickListener {
             // Respond to positive button click.
-            val dateFormatter = SimpleDateFormat("EEEE, MMM dd, yyyy")
+            val dateFormatter = SimpleDateFormat("EEEE, MMM dd, yyyy", Locale.ENGLISH)
             UiUtils.dateSelected = true
             date = dateFormatter.format(Date(it)).toString()
             Log.d("TAG", "onCreateView:11 $date")

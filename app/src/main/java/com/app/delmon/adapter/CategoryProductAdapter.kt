@@ -96,8 +96,15 @@ class CategoryProductAdapter(
             if (Constants.User.apptype==2){
                 addBasket.visibility = View.GONE
             }
-            Glide.with(context).load(data[position]!!.image!![0]).placeholder(R.drawable.placeholder_image).error(R.drawable.placeholder_image).into(imageView3)
-
+            if (!data[position].image.isNullOrEmpty()) {
+                Glide.with(context).load(data[position].image!![0])
+                    .placeholder(R.drawable.placeholder_image).error(R.drawable.placeholder_image)
+                    .into(imageView3)
+            }else{
+                Glide.with(context).load(R.drawable.placeholder_image)
+                    .placeholder(R.drawable.placeholder_image).error(R.drawable.placeholder_image)
+                    .into(imageView3)
+            }
             add.setOnClickListener {
                 onClickListener.onClickItem(position,"add")
             }

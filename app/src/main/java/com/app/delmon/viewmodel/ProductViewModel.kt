@@ -13,9 +13,36 @@ import com.app.delmon.network.Api
 import com.app.delmon.network.ApiInput
 import com.app.delmon.network.UrlHelper
 import com.app.delmon.utils.Constants
+import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.reflect.TypeToken
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.google.gson.JsonDeserializationContext
+import com.google.gson.JsonDeserializer
+import com.google.gson.JsonElement
 import org.json.JSONArray
 import org.json.JSONObject
+import java.lang.reflect.Type
+
+
+class StringListAdapter : JsonDeserializer<List<String?>> {
+    override fun deserialize(
+        json: JsonElement?,
+        typeOfT: Type?,
+        context: JsonDeserializationContext?
+    ): List<String?> {
+        return when {
+            json == null || json.isJsonNull -> emptyList()
+            json.isJsonArray -> {
+                json.asJsonArray.map { it.asString }
+            }
+            json.isJsonPrimitive -> {
+                val value = json.asString
+                if (value.isBlank()) emptyList() else listOf(value)
+            }
+            else -> emptyList()
+        }
+    }
+}
 
 class ProductViewModel (application: Application) : AndroidViewModel(application) {
 
@@ -67,7 +94,12 @@ class ProductViewModel (application: Application) : AndroidViewModel(application
         ), object : ApiResponseCallback {
             override fun setResponseSuccess(jsonObject: JSONObject) {
                 Log.d("TAG", "sizeRecycData setResponseSuccess: $jsonObject")
-                val gson = Gson()
+                val gson = GsonBuilder()
+                    .registerTypeAdapter(
+                        object : TypeToken<List<String?>>() {}.type,
+                        StringListAdapter()
+                    )
+                    .create()
                 val response: ProductDetailResponse =  gson.fromJson(jsonObject.toString(), ProductDetailResponse::class.java)
                 commonResponseModel.value = response
             }
@@ -663,7 +695,7 @@ class ProductViewModel (application: Application) : AndroidViewModel(application
         /*if (cartonDiscountedCount != 0) {
             jsonObject.put("cartonDiscount", cartonDiscountedCount)
         }*/
-        jsonObject.put("cartonDiscount", cartonDiscountedCount)
+        jsonObject.put("cartonDiscount", employeeCartonDiscount)
 
         jsonObject.put("order", orderData.toString())
         jsonObject.put("deliveryType", orderType)
@@ -684,6 +716,11 @@ class ProductViewModel (application: Application) : AndroidViewModel(application
         jsonObject.put("deliveryDate", deliveryDate)
         jsonObject.put("deliveryNotes", notes)
         jsonObject.put("LoyaltyAmount", loyaltyAmount)
+        if (Constants.User.usertype == "EMPLOYEE") {
+            jsonObject.put("maxCartonDiscountPerDay", cartonDiscountedCount)
+        }else{
+            jsonObject.put("maxCartonDiscountPerDayUser", cartonDiscountedCount)
+        }
         jsonObject.put("userCartonDiscount", userCartonDiscount)
         jsonObject.put("employeeCartonDiscount", employeeCartonDiscount)
         Log.d("dxcvb",""+jsonObject)

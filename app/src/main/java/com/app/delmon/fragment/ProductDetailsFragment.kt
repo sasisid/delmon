@@ -19,6 +19,7 @@ import com.app.delmon.Model.BasketNameResponse
 import com.app.delmon.Model.ProductDetailResponse
 import com.app.delmon.Model.RecipesResponse
 import com.app.delmon.R
+import com.app.delmon.Session.SharedHelper
 import com.app.delmon.adapter.BasketNameListAdapter
 import com.app.delmon.adapter.DetailsPageRecipiesAdapter
 import com.app.delmon.adapter.ProductDetailSizeAdapter
@@ -33,6 +34,7 @@ import com.app.delmon.utils.UiUtils
 import com.app.delmon.viewmodel.ProductViewModel
 import com.bumptech.glide.Glide
 import com.squareup.picasso.Picasso
+import java.util.Locale
 
 
 class ProductDetailsFragment : Fragment() {
@@ -53,6 +55,7 @@ class ProductDetailsFragment : Fragment() {
     var selectedType = 1
     var basketProductId = 0
     var isFav = 0
+    private lateinit var sharedHelper: SharedHelper
 
     private val onBackPressedCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
@@ -89,6 +92,7 @@ class ProductDetailsFragment : Fragment() {
     ): View {
         binding = FragmentProductDetailsBinding.inflate(inflater, container, false)
         productViewModel = ViewModelProvider(this)[ProductViewModel::class.java]
+        sharedHelper= SharedHelper(requireContext())
 
         binding.strikeAmt.showStrikeThrough(true)
 
@@ -175,7 +179,7 @@ class ProductDetailsFragment : Fragment() {
                 quantity += 1
                 var tot  = price * quantity
                 cartCount.text = quantity.toString()
-                amt.text =String.format("%.3f", tot) + " BD"
+                amt.text =String.format(Locale.US,"%.3f", tot) + " BD"
                 updateCart(cartId,quantity)
             }
 
@@ -184,7 +188,7 @@ class ProductDetailsFragment : Fragment() {
                 if (quantity>=1) {
                     var tot = price * quantity
                     cartCount.text = quantity.toString()
-                    amt.text = String.format("%.2f", tot) + " BD"
+                    amt.text = String.format(Locale.US,"%.2f", tot) + " BD"
                 }
                 if (quantity >= 0){
                     updateCart(cartId,quantity)
@@ -258,7 +262,6 @@ class ProductDetailsFragment : Fragment() {
                                         Glide.with(requireContext()).load(data.image!![0]).placeholder(R.drawable.placeholder_image).error(R.drawable.placeholder_image).into(pimage)
                                     }
 
-                                    title.text = data.name.toString()
                                     weight.text = data.weight.toString()
                                     Log.e("appSample", "STOCK: ${data.isStock}")
                                     /*if (data.isStock == 1) {
@@ -266,24 +269,27 @@ class ProductDetailsFragment : Fragment() {
                                         stock.setBackgroundColor(requireContext().resources.getColor(R.color.delmon_red))
                                     }*/
 
-                                    if(data.isStock != null) {
-                                        if (data.isStock!! > 0) {
-                                            stock.text = resources.getString(R.string.instock)
-                                            stock.setBackgroundColor(requireContext().resources.getColor(R.color.secondary_feeding_color))
-                                        } else {
-                                            stock.text = resources.getString(R.string.out_of_stock)
-                                            stock.setBackgroundColor(requireContext().resources.getColor(R.color.delmon_red))
-                                        }
-                                        isStock = data.isStock!!
-                                    }
+
 
                                     if(data.price != null) {
                                         price = data.price!!
                                     }
-
+//                                    price = if (data.price!=null){
+//                                        data.offerPrice!!
+//                                    }else{
+//                                        data.normalPrice!!
+//                                    }
                                     noOfPcs.text = resources.getString(R.string.no_of_picies)+" "+data.noOfPieces.toString()
                                     serves.text = resources.getString(R.string.serves)+" "+data.serves.toString()
-                                    descTxt.text = data.description
+                                    Log.d("TAG", "sharedHelper.language:  ${sharedHelper.language}")
+                                    if(sharedHelper.language == "ar") {
+                                        descTxt.text = data.arDescription
+                                        title.text = data.arProductName.toString()
+
+                                    }else{
+                                        title.text = data.enProductName.toString()
+                                        descTxt.text = data.description
+                                    }
                                     if (data.quantity!! > 0) {
                                         amt.text =  (data.quantity!! * price).toString() + " BD"
                                         Log.e("appSample", "ONE: " + (data.quantity!! * price).toString() + " BD")
@@ -324,6 +330,7 @@ class ProductDetailsFragment : Fragment() {
                                         Glide.with(requireContext()).load(R.drawable.selected_wishlist).placeholder(R.drawable.placeholder_image).into(binding.addWishlist)
                                     }
 //                                    updateCartLayout(data.quantity!!)
+                                    if (!data.relatedProduct.isNullOrEmpty()){
                                     sizeArrayData = data.relatedProduct as ArrayList<ProductDetailResponse.Data.RelatedProduct>
                                     Log.d("TAG", "getProductData: ${sizeArrayData.toString()}")
                                     filteredsizeArrayData = if (selectedType==1){
@@ -334,7 +341,7 @@ class ProductDetailsFragment : Fragment() {
                                     Log.d("TAG", "getProductData: 2 ${filteredsizeArrayData.toString()}")
 //                                    if (!filteredsizeArrayData.isNullOrEmpty()) {
                                     sizeRecyc(filteredsizeArrayData)
-//                                    }
+                                    }
                                     if (!data.recipiesList.isNullOrEmpty()) {
                                         recipesListRecyc(data.recipiesList)
                                         recipiesData =
@@ -489,9 +496,23 @@ class ProductDetailsFragment : Fragment() {
             override fun onClickItem(position: Int,type:String) {
                 Log.d("TAG", "sizeRecycData: 1 ${position.toString()} == ${data.toString()}")
                 productId = (data ?: throw NullPointerException("Expression 'data' must not be null"))[position]!!.id!!
-                price = data[position].price!!
-                binding.amt.text = "$price BD"
+                price = if (offerPrice!=0.0){
+                    data[position].offerPrice!!
+                }else{
+                    data[position].normalPrice!!
+                }
+                binding.textView5.text = "$price BD"
                 binding.weight.text = data[position].weight!!
+                if(data[0].stock != null) {
+                    if (data[0].stock!! > 0) {
+                        binding.stock.text = resources.getString(R.string.instock)
+                        binding.stock.setBackgroundColor(requireContext().resources.getColor(R.color.secondary_feeding_color))
+                    } else {
+                        binding. stock.text = resources.getString(R.string.out_of_stock)
+                        binding.stock.setBackgroundColor(requireContext().resources.getColor(R.color.delmon_red))
+                    }
+                    isStock = data[0].stock!!
+                }
                 //                getProductData(data[position]!!.id!!)
 //                    updateCartLayout(data[position].quantity!!)
                 updateCartLayout(0)
@@ -501,9 +522,13 @@ class ProductDetailsFragment : Fragment() {
 
         if (!filteredsizeArrayData.isNullOrEmpty()) {
             productId = data[0].id!!
-            price = data[0].price!!
             normalPrice = data[0].normalPrice!!
             offerPrice = data[0].offerPrice!!
+            price = if (offerPrice!=0.0){
+                offerPrice
+            }else{
+                normalPrice
+            }
             binding.amt.text = "$price BD"
             Log.e("appSample", "isNullOrEmpty: $price")
             Log.e("appSample", "normalPrice: $normalPrice")
@@ -523,6 +548,16 @@ class ProductDetailsFragment : Fragment() {
                 binding.amt.visibility = View.VISIBLE
                 binding.amt.text = "$normalPrice BD"
             }
+            if(data[0].stock != null) {
+                if (data[0].stock!! > 0) {
+                    binding.stock.text = resources.getString(R.string.instock)
+                    binding.stock.setBackgroundColor(requireContext().resources.getColor(R.color.secondary_feeding_color))
+                } else {
+                    binding. stock.text = resources.getString(R.string.out_of_stock)
+                    binding.stock.setBackgroundColor(requireContext().resources.getColor(R.color.delmon_red))
+                }
+                isStock = data[0].stock!!
+            }
 
             /*if(data[0].normalPrice!! > data[0].offerPrice!! &&
                         data[0].normalPrice!! > data[0].price!!) {
@@ -541,7 +576,7 @@ class ProductDetailsFragment : Fragment() {
         } else {
             productId = 0
             price = 0.0
-            binding.amt.text = "$price BD"
+            binding.textView5.text = "$price BD"
             Log.e("appSample", "isNullOrEmpty_ELSE: $price")
             binding.weight.text ="0"
             updateCartLayout(0)

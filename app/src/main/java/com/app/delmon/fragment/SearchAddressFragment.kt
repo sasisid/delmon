@@ -53,7 +53,7 @@ class SearchAddressFragment : Fragment() {
 
     private fun autoPlaceSearch(){
         if (!Places.isInitialized()) {
-            Places.initialize(context, "AIzaSyA4RBfnVNqTWspqevUPtYdrCdwySQhwmRU", Locale.US);
+            Places.initialize(context, "AIzaSyDJkkEVjbiTj-xMGkCafmoE4DmXYdRLgS0", Locale.US);
         }
         // Initialize the AutocompleteSupportFragment.
         val autocompleteFragment =
@@ -88,8 +88,7 @@ class SearchAddressFragment : Fragment() {
 
                         Log.d("whsduwshuwkanikaak",""+address.toString())
 
-
-                        fcity=city
+                        if (city!=null) fcity=city
                         faddress = address.toString()
                         fcity = addresses[0].locality.toString()
 //                        sharedHelper!!.locationname= fcity as String

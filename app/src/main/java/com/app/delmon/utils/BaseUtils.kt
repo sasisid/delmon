@@ -33,7 +33,6 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.app.delmon.Session.SharedHelper
 import com.app.delmon.R
-import com.stripe.android.customersheet.injection.CustomerSheetViewModelModule_Companion_ResourcesFactory.resources
 
 
 import java.io.File
@@ -198,7 +197,7 @@ class BaseUtils {
         }
 
         fun numberFormat(value: Double): String {
-            return String.format("%.2f", value)
+            return String.format(Locale.US,"%.2f", value)
         }
 
         fun getTimeFromTimeStamp(value: String): String {
@@ -278,7 +277,7 @@ class BaseUtils {
             val sharedHelper = SharedHelper(activity)
 
             // Create an image file name
-            val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+            val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ENGLISH).format(Date())
             val storageDir: File? = activity.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
             return File.createTempFile(
                 "JPEG_${timeStamp}_", /* prefix */

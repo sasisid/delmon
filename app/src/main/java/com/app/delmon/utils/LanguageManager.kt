@@ -1,3 +1,5 @@
+package com.app.delmon.utils
+
 import android.content.Context
 import android.content.res.Configuration
 import android.os.Build

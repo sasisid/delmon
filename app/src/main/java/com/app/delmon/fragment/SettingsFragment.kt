@@ -15,6 +15,7 @@ import com.app.delmon.R
 import com.app.delmon.Session.SharedHelper
 import com.app.delmon.activity.MainActivity
 import com.app.delmon.databinding.FragmentSettingsBinding
+import com.app.delmon.utils.LanguageManager
 import com.app.delmon.utils.UiUtils
 import java.util.*
 
@@ -81,12 +82,14 @@ class SettingsFragment : Fragment() {
             arabicCard.setOnClickListener{
                 sharedHelper.language = "ar"
                 MainActivity.languageSelected = "ar"
+                changeLanguage("ar")
                 arabicCheck.setImageResource(R.drawable.icon_awesome_check_circle__selected);
                 englishCheck.setImageResource(R.drawable.icon_awesome_check_circle_unselected);
 
             }
             
             englishCard.setOnClickListener{
+                changeLanguage("en")
                 sharedHelper.language = "en"
                 MainActivity.languageSelected = "en"
                 arabicCheck.setImageResource(R.drawable.icon_awesome_check_circle_unselected);
@@ -146,6 +149,18 @@ class SettingsFragment : Fragment() {
             }).also { requireActivity().window.decorView.layoutDirection = it }
         }
         findNavController().navigate(R.id.action_settings_fragment_self)
+    }
+    private fun changeLanguage(languageCode: String) {
+        setLocale(languageCode)
+        LanguageManager.changeLanguage(requireActivity(), languageCode)
+
+        // Set layout direction for the root view
+        val rootView = requireActivity().findViewById<View>(android.R.id.content)
+        LanguageManager.setLayoutDirection(rootView, languageCode)
+
+        // You can also update UI elements or reload content if needed
+        // For example, recreate the activity to apply the changes
+//        recreate()
     }
 
     companion object {

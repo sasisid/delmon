@@ -303,7 +303,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="10dp"
                     android:layout_marginBottom="20dp"
-                    android:text="Near Grand Mosque Bldg 676 Road 4015, PO Box 15412, Manama, 340, Bahrain."
+                    android:text=""
                     android:textAlignment="viewStart"
                     android:textColor="#54000000"
                     android:textSize="10dp"

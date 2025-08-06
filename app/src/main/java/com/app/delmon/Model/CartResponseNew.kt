@@ -14,6 +14,7 @@ data class CartResponseNew(
     var vat: Int? = null,
     var cartonDiscount: Int = 0,
     var maxCartonDiscountPerDay: Int = 0,
+    var maxCartonDiscountPerDayUser: Int = 0,
     var defaultCartonDiscount: Int = 0,
     var defaultMaxCartonDiscountPerDayUser: Int = 0,
     var defaultMaxCartonDiscountPerDayEmployee: Int = 0,

@@ -55,7 +55,15 @@ class HomeProductChildAdapter(
             productSize1.text = data!![position]!!.weight
             productPrice.text = "BD "+ data!![position]!!.price.toString()
             productPrice1.text = "BD "+ data!![position]!!.price.toString()
-            Glide.with(context).load(data!![position]!!.image!![0]).placeholder(R.drawable.placeholder_image).error(R.drawable.placeholder_image).into(imageView3)
+            try {
+                if (!data!![position]?.image .isNullOrEmpty()) {
+                    Glide.with(context).load(data!![position]!!.image!![0])
+                        .placeholder(R.drawable.placeholder_image).error(R.drawable.placeholder_image)
+                        .into(imageView3)
+                }
+            }catch (e: Exception){
+                e.printStackTrace()
+            }
 
         }
     }

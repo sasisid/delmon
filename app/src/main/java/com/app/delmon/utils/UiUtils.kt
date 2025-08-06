@@ -97,7 +97,7 @@ object UiUtils {
         datePicker.show(fragment, "tag");
         datePicker.addOnPositiveButtonClickListener {
             // Respond to positive button click.
-            val dateFormatter = SimpleDateFormat("EEEE, MMM dd, yyyy")
+            val dateFormatter = SimpleDateFormat("EEEE, MMM dd, yyyy", Locale.ENGLISH)
             dateSelected = true
             date = dateFormatter.format(Date(it)).toString()
             Log.d("TAG", "onCreateView:11 $date")

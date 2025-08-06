@@ -99,7 +99,7 @@
         android:layout_marginStart="60dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="60dp"
-        android:fontFamily="@font/poppins_semibold"
+        android:fontFamily="@font/cairo_semibold"
         android:text="SPIN THE WHEEL"
         android:background="@drawable/rectangle_secondary_border"
         android:textColor="#ffffff"
