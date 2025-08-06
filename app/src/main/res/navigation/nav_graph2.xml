@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_orderFragment_to_receipesFragment"
             app:destination="@id/category_fragment" />
+        <action
+            android:id="@+id/action_order_fragment_to_login_fragment2"
+            app:destination="@id/login_fragment" />
     </fragment>
     <fragment
         android:id="@+id/receipes_fragment"

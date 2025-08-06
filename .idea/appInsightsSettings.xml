@@ -15,14 +15,30 @@
                   <option name="projectNumber" value="633717232073" />
                 </ConnectionSetting>
               </option>
+              <option name="devices">
+                <list>
+                  <DeviceSetting>
+                    <option name="deviceType" value="Phone" />
+                    <option name="displayName" value="OnePlus (OnePlus8Pro)" />
+                    <option name="manufacturer" value="OnePlus" />
+                    <option name="model" value="OnePlus8Pro" />
+                  </DeviceSetting>
+                  <DeviceSetting>
+                    <option name="deviceType" value="Phone" />
+                    <option name="displayName" value="OnePlus (CPH2381)" />
+                    <option name="manufacturer" value="OnePlus" />
+                    <option name="model" value="CPH2381" />
+                  </DeviceSetting>
+                </list>
+              </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />
-              <option name="timeIntervalDays" value="THIRTY_DAYS" />
+              <option name="timeIntervalDays" value="ONE_DAY" />
               <option name="versions">
                 <list>
                   <VersionSetting>
-                    <option name="buildVersion" value="10" />
-                    <option name="displayName" value="1.0.9 (10)" />
-                    <option name="displayVersion" value="1.0.9" />
+                    <option name="buildVersion" value="11" />
+                    <option name="displayName" value="1.1.0 (11)" />
+                    <option name="displayVersion" value="1.1.0" />
                   </VersionSetting>
                 </list>
               </option>

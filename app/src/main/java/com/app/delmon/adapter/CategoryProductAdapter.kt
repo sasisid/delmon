@@ -86,7 +86,7 @@ class CategoryProductAdapter(
                 productDesc.text = data[position]!!.description
 
             }else{
-                productName.text = data[position]!!.arProductName
+                productName.text = data[position].arProductName
                 productDesc.text = data[position]!!.arDescription
             }
             productWeight.text = data[position]!!.weight
@@ -96,7 +96,7 @@ class CategoryProductAdapter(
             if (Constants.User.apptype==2){
                 addBasket.visibility = View.GONE
             }
-            if (!data[position].image.isNullOrEmpty()) {
+            if (data.isNotEmpty() && !data[position].image.isNullOrEmpty()) {
                 Glide.with(context).load(data[position].image!![0])
                     .placeholder(R.drawable.placeholder_image).error(R.drawable.placeholder_image)
                     .into(imageView3)

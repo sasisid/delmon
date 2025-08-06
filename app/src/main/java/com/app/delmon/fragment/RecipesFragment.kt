@@ -58,7 +58,7 @@ class RecipesFragment : Fragment() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 Log.e("delmonUser", "filteredrecipiesData: $filteredrecipiesData")
                 Log.e("delmonUser", "recipiesData: $recipiesData")
-                Log.e("delmonUser", "it.name: ${recipiesData[0].name}")
+//                Log.e("delmonUser", "it.name: ${recipiesData[0].name}")
                filteredrecipiesData = recipiesData.filter {
                    it.name?.contains(s.toString(),ignoreCase = true) ?: false
                } as ArrayList<RecipesResponse.Data>
