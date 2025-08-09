@@ -43,9 +43,9 @@ class FavouritesFragment : Fragment() {
 
         DialogUtils.showLoader(requireContext())
         getData()
-        binding.back.setOnClickListener {
-            requireFragmentManager().popBackStack()
-        }
+//        binding.back.setOnClickListener {
+//            requireFragmentManager().popBackStack()
+//        }
         return binding.root
     }
 

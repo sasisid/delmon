@@ -12,6 +12,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
+import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -257,7 +259,7 @@ class ProductDetailsFragment : Fragment() {
                                         return@apply;
                                     }
 
-                                    if(data.image != null) {
+                                    if( !data.image.isNullOrEmpty()) {
                                         Log.e("appSample", "IMAGE: ${data.image!![0]}")
                                         Glide.with(requireContext()).load(data.image!![0]).placeholder(R.drawable.placeholder_image).error(R.drawable.placeholder_image).into(pimage)
                                     }
@@ -503,15 +505,23 @@ class ProductDetailsFragment : Fragment() {
                 }
                 binding.textView5.text = "$price BD"
                 binding.weight.text = data[position].weight!!
-                if(data[0].stock != null) {
-                    if (data[0].stock!! > 0) {
+                if(data[position].stock != null) {
+                    if (data[position].stock!! > 0) {
                         binding.stock.text = resources.getString(R.string.instock)
                         binding.stock.setBackgroundColor(requireContext().resources.getColor(R.color.secondary_feeding_color))
+                        ViewCompat.setBackgroundTintList(
+                            binding.stock,
+                            ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.secondary_feeding_color))
+                        )
                     } else {
-                        binding. stock.text = resources.getString(R.string.out_of_stock)
+                        binding.stock.text = resources.getString(R.string.out_of_stock)
                         binding.stock.setBackgroundColor(requireContext().resources.getColor(R.color.delmon_red))
+                        ViewCompat.setBackgroundTintList(
+                            binding.stock,
+                            ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.delmon_red))
+                        )
                     }
-                    isStock = data[0].stock!!
+                    isStock = data[position].stock!!
                 }
                 //                getProductData(data[position]!!.id!!)
 //                    updateCartLayout(data[position].quantity!!)
@@ -530,6 +540,7 @@ class ProductDetailsFragment : Fragment() {
                 normalPrice
             }
             binding.amt.text = "$price BD"
+
             Log.e("appSample", "isNullOrEmpty: $price")
             Log.e("appSample", "normalPrice: $normalPrice")
             Log.e("appSample", "offerPrice: $offerPrice")

@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
 //        navController.enableOnBackPressed(true)
         navController.addOnDestinationChangedListener { _, destination, _ ->
             Log.d("TAG", "onCreate:${destination.id} $destination ")
-            if (destination.id == R.id.home_fragment || destination.id == R.id.feedingFragment || destination.id == R.id.receipes_fragment || destination.id == R.id.order_fragment || destination.id == R.id.profile_fragment ){
+            if (destination.id == R.id.home_fragment || destination.id == R.id.feedingFragment || destination.id == R.id.receipes_fragment || destination.id == R.id.order_fragment || destination.id == R.id.profile_fragment || destination.id == R.id.favouritesFragment  ){
                 binding.bottomBar.visibility = View.VISIBLE
             }else{
                 binding.bottomBar.visibility = View.GONE

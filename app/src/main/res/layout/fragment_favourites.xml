@@ -22,6 +22,7 @@
             android:layout_height="wrap_content"
             android:paddingHorizontal="20dp"
             android:paddingVertical="10dp"
+            android:visibility="gone"
             android:src="@drawable/white_back_arrow" />
 
         <TextView
