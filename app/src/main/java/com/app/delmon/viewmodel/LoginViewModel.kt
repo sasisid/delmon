@@ -155,7 +155,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
         val jsonObject = JSONObject()
         jsonObject.put("userName", uname)
         jsonObject.put("email", email)
-        jsonObject.put("deviceToken", dToken)
+        jsonObject.put("deviceToken", sharedHelper?.fcmToken)
         val commonResponseModel: MutableLiveData<UserResponse> = MutableLiveData()
         Api.postMethod(getApiParams(
             context,

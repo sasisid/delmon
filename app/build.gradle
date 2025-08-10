@@ -14,16 +14,31 @@ android {
         applicationId "com.app.delmon"
         minSdk 24
         targetSdk 34
-        versionCode 11
-        versionName "1.1.0"
+        versionCode 13
+        versionName "1.1.2"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    defaultConfig {
+        // If you use vectors anywhere pre-Lollipop
+        vectorDrawables.useSupportLibrary = true
+    }
+
     buildTypes {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            // Code shrink + obfuscation
+            minifyEnabled true
+
+            // Resource shrink (runs after minify)
+            shrinkResources true
+
+            // Recommended default rules + your own
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'),
+                    'proguard-rules.pro'
+
+            // Make sure release is not debuggable
+            debuggable false
         }
     }
     compileOptions {
@@ -80,6 +95,7 @@ dependencies {
     //firebase
     implementation 'com.google.firebase:firebase-crashlytics:18.2.12'
     implementation platform('com.google.firebase:firebase-bom:30.3.1')
+    implementation 'com.google.firebase:firebase-messaging-ktx'
     implementation 'com.google.firebase:firebase-analytics:21.1.0'
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.google.firebase:firebase-auth-ktx'

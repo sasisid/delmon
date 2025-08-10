@@ -1,8 +1,10 @@
 package com.app.delmon.activity
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.content.res.Resources
 import android.os.Build
@@ -12,6 +14,8 @@ import android.util.AttributeSet
 import android.util.DisplayMetrics
 import android.util.Log
 import android.view.View
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import com.app.delmon.Session.SharedHelper
 import com.app.delmon.databinding.ActivitySelectionBinding
@@ -33,7 +37,13 @@ class SelectionActivity : AppCompatActivity() {
 
         LanguageManager.changeLanguage(this,sharedHelper.language)
 
-
+        if (Build.VERSION.SDK_INT >= 33 &&
+                ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(
+                this, arrayOf(Manifest.permission.POST_NOTIFICATIONS), 1001
+            )
+        }
         WindowCompat.setDecorFitsSystemWindows(window, false)
         binding.poltryCard.setOnClickListener {
             Constants.User.apptype = 1

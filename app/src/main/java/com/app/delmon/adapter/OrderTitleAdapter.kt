@@ -10,6 +10,7 @@ import com.app.delmon.R
 import com.app.delmon.databinding.CategoryCardBinding
 import com.app.delmon.databinding.OrderTitleCardBinding
 import com.app.delmon.interfaces.OnClickListener
+import java.util.Locale
 
 
 class OrderTitleAdapter(
@@ -18,8 +19,11 @@ class OrderTitleAdapter(
     var positiontofix: Int,
     ): RecyclerView.Adapter<OrderTitleAdapter.OrderParentViewHolder>(){
     var row_index: Int = -1
-    val titleString = arrayOf<String>("My Orders", "Confirmed Orders", "Completed Orders", "Cancelled Orders")
-
+    val titleString: Array<String> = if (Locale.getDefault().language == "ar") {
+        arrayOf("طلبي", "الطلبات المؤكدة", "تم إكمال الطلب", "الطلبات الملغاة")
+    } else {
+        arrayOf("My Orders", "Confirmed Orders", "Completed Orders", "Cancelled Orders")
+    }
 
     inner class OrderParentViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var binding: OrderTitleCardBinding = OrderTitleCardBinding.bind(view)

@@ -9,6 +9,7 @@ import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.ActivityCompat.recreate
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.app.delmon.R
@@ -160,7 +161,7 @@ class SettingsFragment : Fragment() {
 
         // You can also update UI elements or reload content if needed
         // For example, recreate the activity to apply the changes
-//        recreate()
+        recreate(requireActivity())
     }
 
     companion object {

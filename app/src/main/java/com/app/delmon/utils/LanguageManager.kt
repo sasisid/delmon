@@ -1,8 +1,12 @@
 package com.app.delmon.utils
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.Configuration
+import android.content.res.Resources
 import android.os.Build
+import android.util.DisplayMetrics
+import android.util.Log
 import android.view.View
 import java.util.*
 
@@ -32,4 +36,6 @@ object LanguageManager {
         // Check if the language is a right-to-left language
         return languageCode.equals("ar", ignoreCase = true) || languageCode.equals("fa", ignoreCase = true)
     }
+
+
 }

@@ -1,6 +1,8 @@
 package com.app.delmon.app
 
 import android.app.Application
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Context
 import android.media.RingtoneManager
 import android.os.Build
@@ -52,6 +54,19 @@ class AppController : Application() {
         request.tag = TAG
         getRequestQueue()?.add(request)
     }
+    object NotifyChannels {
+        const val GENERAL = "general"
+
+        fun ensure(context: Context) {
+            if (Build.VERSION.SDK_INT >= 26) {
+                val ch = NotificationChannel(
+                    GENERAL, "General", NotificationManager.IMPORTANCE_DEFAULT
+                ).apply { description = "General notifications" }
+                val nm = context.getSystemService(NotificationManager::class.java)
+                nm.createNotificationChannel(ch)
+            }
+        }
+    }
 
     override fun onCreate() {
         super.onCreate()
@@ -59,7 +74,11 @@ class AppController : Application() {
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
         mFirebaseAnalytics?.setAnalyticsCollectionEnabled(true)
         GlobalScope.launch (Dispatchers.Main){
-            var a =  GatewaySDK.initialize(this@AppController,"E15251950","DELMON POULTRY COMPANY BSC","https://credimax.gateway.mastercard.com/ma/",GatewayRegion.SAUDI_ARABIA,
+            var a =  GatewaySDK.initialize(this@AppController,
+                "E15251950",
+                "DELMON POULTRY COMPANY BSC",
+                "https://credimax.gateway.mastercard.com/ma/",
+                GatewayRegion.SAUDI_ARABIA,
                 UiCustomization()
             )
             Log.d(TAG, "onCreate:appcontroller "+a)
