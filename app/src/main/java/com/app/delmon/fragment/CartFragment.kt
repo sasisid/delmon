@@ -131,7 +131,7 @@ class CartFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
         binding = FragmentCartBinding.inflate(inflater, container, false)
-        productViewModel = ViewModelProvider(this)[ProductViewModel::class.java]
+        productViewModel = ViewModelProvider(requireActivity())[ProductViewModel::class.java]
         Log.d("TAG", "cart: createview $orderType")
         requireActivity().apply {
             // Redirect system "Back" press to our dispatcher

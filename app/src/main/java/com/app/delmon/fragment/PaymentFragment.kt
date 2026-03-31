@@ -53,7 +53,7 @@ class PaymentFragment : Fragment() {
         binding = FragmentPaymentBinding.inflate(inflater, container, false)
         homeViewModel = ViewModelProvider(this)[PaymentViewModel::class.java]
         homeFragViewModel = ViewModelProvider(this)[HomeViewModel::class.java]
-        productViewModel = ViewModelProvider(this)[ProductViewModel::class.java]
+        productViewModel = ViewModelProvider(requireActivity())[ProductViewModel::class.java]
         getsessionData()
         var ordersubObject:JSONObject = JSONObject()
         ordersubObject.put("id","order123")

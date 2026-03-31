@@ -26,6 +26,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.app.delmon.R
+import com.app.delmon.Session.SharedHelper
 import com.app.delmon.databinding.FragmentAddressMapBinding
 import com.app.delmon.network.Api.TAG
 import com.app.delmon.utils.UiUtils
@@ -182,8 +183,10 @@ class AddressMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnCameraIdl
         }
     }
 
+    private fun appLocale(): Locale = Locale(SharedHelper(requireContext()).language)
+
     private  fun getaddress(latitude:Double,longitude:Double){
-        val geocoder = Geocoder(requireContext(), Locale.getDefault())
+        val geocoder = Geocoder(requireContext(), appLocale())
         val list: List<Address> = geocoder.getFromLocation(latitude, longitude, 1)!!
         Log.d("TAG", "getaddress: $list")
         binding.apply {
@@ -255,7 +258,7 @@ class AddressMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnCameraIdl
                 mFusedLocationClient.lastLocation.addOnCompleteListener(requireActivity()) { task ->
                     val location: Location? = task.result
                     if (location != null) {
-                        val geocoder = Geocoder(requireContext(), Locale.getDefault())
+                        val geocoder = Geocoder(requireContext(), appLocale())
                         lattitude= location.latitude
                         longitude= location.longitude
                         locateMyLocation()

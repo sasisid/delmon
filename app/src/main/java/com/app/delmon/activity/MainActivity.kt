@@ -1,6 +1,5 @@
 package com.app.delmon.activity
 
-import android.app.Application
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -11,15 +10,9 @@ import androidx.core.view.WindowCompat
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.app.delmon.R
-import com.app.delmon.app.AppController
+import com.app.delmon.Session.SharedHelper
 import com.app.delmon.databinding.ActivityMainBinding
 import com.app.delmon.utils.Constants
-import com.mastercard.gateway.android.sdk.GatewayRegion
-import com.mastercard.gateway.android.sdk.GatewaySDK
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import org.emvco.threeds.core.ui.UiCustomization
 
 
 class MainActivity : BaseActivity() {
@@ -30,11 +23,13 @@ class MainActivity : BaseActivity() {
 
     companion object {
         var isloggedIn = false ;
-        var languageSelected = "en"
+        /** Mirrors settings; default is Arabic (see [LanguageManager.DEFAULT_LANGUAGE]). */
+        var languageSelected = com.app.delmon.utils.LanguageManager.DEFAULT_LANGUAGE
     }
 
     override  fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        languageSelected = SharedHelper(this).language
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         WindowCompat.setDecorFitsSystemWindows(window, true)

@@ -40,7 +40,7 @@ class BasketFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentBasketBinding.inflate(inflater, container, false)
-        productViewModel = ViewModelProvider(this)[ProductViewModel::class.java]
+        productViewModel = ViewModelProvider(requireActivity())[ProductViewModel::class.java]
         binding.customisedBasket.setOnClickListener {
             binding.view1.visibility = View.GONE
             binding.view2.visibility = View.VISIBLE

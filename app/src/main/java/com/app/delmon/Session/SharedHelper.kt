@@ -12,6 +12,7 @@ import android.provider.Settings
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import com.app.delmon.R
+import com.app.delmon.utils.LanguageManager
 import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.reflect.TypeToken
 import com.google.gson.Gson
 
@@ -48,17 +49,25 @@ class SharedHelper(context: Context) {
         }
 
     var language: String
-        get() : String {
-            return if (sharedPreference.getKey("language") == "") {
-                "ar"
+        get(): String {
+            val stored = sharedPreference.getKey("language")
+            return if (stored.isEmpty()) {
+                LanguageManager.DEFAULT_LANGUAGE
             } else {
-                sharedPreference.getKey("language")
+                LanguageManager.normalizeLanguageCode(stored)
             }
-
         }
         set(value) {
-            sharedPreference.putKey("language", value)
+            val code = LanguageManager.normalizeLanguageCode(value)
+            sharedPreference.putKeyCommit("language", code)
         }
+
+    /** Persist Arabic on first launch so prefs match the default UI language. */
+    fun ensureDefaultLanguagePersisted() {
+        if (sharedPreference.getKey("language").isEmpty()) {
+            sharedPreference.putKeyCommit("language", LanguageManager.DEFAULT_LANGUAGE)
+        }
+    }
 
     var userType: String
         get() : String {

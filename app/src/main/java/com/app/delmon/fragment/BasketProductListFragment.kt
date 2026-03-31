@@ -43,7 +43,7 @@ class BasketProductListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentBasketProductListBinding.inflate(inflater, container, false)
-        productViewModel = ViewModelProvider(this)[ProductViewModel::class.java]
+        productViewModel = ViewModelProvider(requireActivity())[ProductViewModel::class.java]
             binding.pageTitle.text = basketName
         binding.back.setOnClickListener {
             findNavController().popBackStack()

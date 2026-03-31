@@ -17,7 +17,7 @@ object Constants {
         var  firstLaunch = true
         var  email = ""
         var  uname = ""
-        var  language = "en"
+        var  language = com.app.delmon.utils.LanguageManager.DEFAULT_LANGUAGE
         var  id = 0
         var  token = ""
         var PreviouscatId:Int =0

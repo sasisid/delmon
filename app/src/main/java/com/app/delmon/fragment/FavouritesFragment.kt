@@ -39,7 +39,7 @@ class FavouritesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentFavouritesBinding.inflate(inflater, container, false)
-        productViewModel = ViewModelProvider(this)[ProductViewModel::class.java]
+        productViewModel = ViewModelProvider(requireActivity())[ProductViewModel::class.java]
 
         DialogUtils.showLoader(requireContext())
         getData()

@@ -22,6 +22,12 @@ class SharedPref(private val context: Context) {
         editor!!.apply()
     }
 
+    /** Same as [putKey] but blocks until persisted — use for language so restarts never read stale prefs. */
+    fun putKeyCommit(key: String, value: String): Boolean {
+        sharedPreferences = context.getSharedPreferences(Cache, Context.MODE_PRIVATE)
+        return sharedPreferences!!.edit().putString(key, value).commit()
+    }
+
     fun getKey(Key: String): String {
         sharedPreferences = context.getSharedPreferences(Cache, Context.MODE_PRIVATE)
         return sharedPreferences!!.getString(Key, "").toString()

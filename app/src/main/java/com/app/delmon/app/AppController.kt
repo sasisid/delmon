@@ -7,6 +7,8 @@ import android.content.Context
 import android.media.RingtoneManager
 import android.os.Build
 import android.util.Log
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.os.LocaleListCompat
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.Volley
@@ -14,14 +16,18 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.mastercard.gateway.android.sdk.GatewayRegion
 import com.mastercard.gateway.android.sdk.GatewaySDK
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import org.emvco.threeds.core.ui.UiCustomization
+import com.app.delmon.Session.SharedHelper
+import com.app.delmon.utils.Constants
 import com.app.delmon.utils.LanguageManager
 
 class AppController : Application() {
 
+    private val applicationScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
     override fun attachBaseContext(base: Context) {
         super.attachBaseContext(LanguageManager.onAttach(base))
@@ -73,22 +79,30 @@ class AppController : Application() {
     override fun onCreate() {
         super.onCreate()
 
+        val sharedHelper = SharedHelper(this)
+        sharedHelper.ensureDefaultLanguagePersisted()
+        // Keeps UI locale aligned with persisted choice after cold start (incl. Android 13+ per-app language).
+        AppCompatDelegate.setApplicationLocales(
+            LocaleListCompat.forLanguageTags(sharedHelper.language)
+        )
+        Constants.User.language = sharedHelper.language
+
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
         mFirebaseAnalytics?.setAnalyticsCollectionEnabled(true)
-        try {
-            GlobalScope.launch (Dispatchers.Main){
-                var a =  GatewaySDK.initialize(this@AppController,
+        applicationScope.launch {
+            try {
+                val result = GatewaySDK.initialize(
+                    this@AppController,
                     "E15251950",
                     "DELMON POULTRY COMPANY BSC",
                     "https://credimax.gateway.mastercard.com/ma/",
                     GatewayRegion.SAUDI_ARABIA,
                     UiCustomization()
                 )
-                Log.d(TAG, "onCreate:appcontroller "+a)
-
+                Log.d(TAG, "onCreate:appcontroller $result")
+            } catch (e: Exception) {
+                FirebaseCrashlytics.getInstance().recordException(e)
             }
-        }catch (e: Exception){
-            FirebaseCrashlytics.getInstance().log(e.toString())
         }
     }
 

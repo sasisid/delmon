@@ -8,12 +8,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.app.delmon.Model.*
+import com.app.delmon.Session.SharedHelper
 import com.app.delmon.interfaces.ApiResponseCallback
 import com.app.delmon.network.Api
 import com.app.delmon.network.ApiInput
 import com.app.delmon.network.UrlHelper
 import com.app.delmon.utils.Constants
-import com.google.gson.Gson
+import com.app.delmon.utils.postFromJson
 import org.json.JSONObject
 import java.io.UnsupportedEncodingException
 import java.net.URLEncoder
@@ -28,7 +29,7 @@ class AddressViewModel: ViewModel(){
     ): ApiInput {
 
         val header: MutableMap<String, String> = HashMap()
-        header[Constants.ApiKeys.LANG] = Constants.User.language
+        header[Constants.ApiKeys.LANG] = SharedHelper(context).language
         header["Authorization"] = "Bearer "+Constants.User.token
 //        if (Constants.User.id != 0 ){
 //            header["userId"] = Constants.User.id.toString()
@@ -59,15 +60,13 @@ class AddressViewModel: ViewModel(){
         ), object : ApiResponseCallback {
             override fun setResponseSuccess(jsonObject: JSONObject) {
                 Log.d("TAG", "setResponseSuccess: $jsonObject")
-                val gson = Gson()
-                val response: PinCodeResponse =  gson.fromJson(jsonObject.toString(), PinCodeResponse::class.java)
-                commonResponseModel.value = response
+                commonResponseModel.postFromJson(jsonObject, PinCodeResponse::class.java) {
+                    PinCodeResponse(error = true)
+                }
             }
 
             override fun setErrorResponse(error: String) {
-                val response = PinCodeResponse()
-                response.error = true
-                commonResponseModel.value = response
+                commonResponseModel.value = PinCodeResponse(error = true)
             }
 
         })
@@ -86,16 +85,13 @@ class AddressViewModel: ViewModel(){
         ), object : ApiResponseCallback {
             override fun setResponseSuccess(jsonObject: JSONObject) {
                 Log.d("TAG", "setResponseSuccess: $jsonObject")
-                val gson = Gson()
-                val response: ZoneResponse =  gson.fromJson(jsonObject.toString(), ZoneResponse::class.java)
-                commonResponseModel.value = response
+                commonResponseModel.postFromJson(jsonObject, ZoneResponse::class.java) {
+                    ZoneResponse(error = true)
+                }
             }
 
             override fun setErrorResponse(error: String) {
-                Log.e("appSample", "ZONEERROR: $error")
-                val response = ZoneResponse()
-                response.error = true
-                commonResponseModel.value = response
+                commonResponseModel.value = ZoneResponse(error = true)
             }
 
         })
@@ -104,18 +100,17 @@ class AddressViewModel: ViewModel(){
     }
 
     fun getFindArea(context: Context, zoneId:String): LiveData<AreaResponse> {
-        Log.e("appSample", "AREA_URL: " + UrlHelper.AREA+zoneId)
+        Log.d("TAG", "getFindArea zoneId=$zoneId")
         val commonResponseModel: MutableLiveData<AreaResponse> = MutableLiveData()
         Api.getMethod(getApiParams(context, null, UrlHelper.AREA+zoneId), object : ApiResponseCallback {
             override fun setResponseSuccess(jsonObject: JSONObject) {
                 Log.d("TAG", "setResponseSuccess: $jsonObject")
-                val response: AreaResponse =  Gson().fromJson(jsonObject.toString(), AreaResponse::class.java)
-                commonResponseModel.value = response
+                commonResponseModel.postFromJson(jsonObject, AreaResponse::class.java) {
+                    AreaResponse(error = true)
+                }
             }
             override fun setErrorResponse(error: String) {
-                val response = AreaResponse()
-                response.error = true
-                commonResponseModel.value = response
+                commonResponseModel.value = AreaResponse(error = true)
             }
 
         })
@@ -134,15 +129,13 @@ class AddressViewModel: ViewModel(){
         ), object : ApiResponseCallback {
             override fun setResponseSuccess(jsonObject: JSONObject) {
                 Log.d("TAG", "setResponseSuccess: $jsonObject")
-                val gson = Gson()
-                val response: AddressResponse =  gson.fromJson(jsonObject.toString(), AddressResponse::class.java)
-                commonResponseModel.value = response
+                commonResponseModel.postFromJson(jsonObject, AddressResponse::class.java) { err ->
+                    AddressResponse().apply { error = true; message = err }
+                }
             }
 
             override fun setErrorResponse(error: String) {
-                val response = AddressResponse()
-                response.error = true
-                commonResponseModel.value = response
+                commonResponseModel.value = AddressResponse().apply { this.error = true; message = error }
             }
 
         })
@@ -163,16 +156,13 @@ class AddressViewModel: ViewModel(){
         ), object : ApiResponseCallback {
             override fun setResponseSuccess(jsonObject: JSONObject) {
                 Log.d("TAG", "setResponseSuccess: $jsonObject")
-                val gson = Gson()
-                val response: CommonResponse =
-                    gson.fromJson(jsonObject.toString(), CommonResponse::class.java)
-                commonResponseModel.value = response
+                commonResponseModel.postFromJson(jsonObject, CommonResponse::class.java) { err ->
+                    CommonResponse().apply { error = true; message = err }
+                }
             }
 
             override fun setErrorResponse(error: String) {
-                val response = CommonResponse()
-                response.success = true
-                commonResponseModel.value = response
+                commonResponseModel.value = CommonResponse().apply { this.error = true; message = error }
             }
 
         })
@@ -190,16 +180,13 @@ class AddressViewModel: ViewModel(){
         ), object : ApiResponseCallback {
             override fun setResponseSuccess(jsonObject: JSONObject) {
                 Log.d("TAG", "setResponseSuccess: $jsonObject")
-                val gson = Gson()
-                val response: CommonResponse =
-                    gson.fromJson(jsonObject.toString(), CommonResponse::class.java)
-                commonResponseModel.value = response
+                commonResponseModel.postFromJson(jsonObject, CommonResponse::class.java) { err ->
+                    CommonResponse().apply { error = true; message = err }
+                }
             }
 
             override fun setErrorResponse(error: String) {
-                val response = CommonResponse()
-                response.success = true
-                commonResponseModel.value = response
+                commonResponseModel.value = CommonResponse().apply { this.error = true; message = error }
             }
 
         })
@@ -217,16 +204,13 @@ class AddressViewModel: ViewModel(){
         ), object : ApiResponseCallback {
             override fun setResponseSuccess(jsonObject: JSONObject) {
                 Log.d("TAG", "setResponseSuccess: $jsonObject")
-                val gson = Gson()
-                val response: CommonResponse =
-                    gson.fromJson(jsonObject.toString(), CommonResponse::class.java)
-                commonResponseModel.value = response
+                commonResponseModel.postFromJson(jsonObject, CommonResponse::class.java) { err ->
+                    CommonResponse().apply { error = true; message = err }
+                }
             }
 
             override fun setErrorResponse(error: String) {
-                val response = CommonResponse()
-                response.success = true
-                commonResponseModel.value = response
+                commonResponseModel.value = CommonResponse().apply { this.error = true; message = error }
             }
 
         })

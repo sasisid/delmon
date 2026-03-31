@@ -46,7 +46,7 @@ class CategoryFragment : Fragment() {
         override fun handleOnBackPressed() {
             // Handle the back button event
             if (binding.basketFrame.visibility==View.VISIBLE) {
-              binding.basketFrame.visibility == View.GONE
+              binding.basketFrame.visibility = View.GONE
             }
             else{
                  findNavController().popBackStack()
@@ -60,7 +60,7 @@ class CategoryFragment : Fragment() {
     ): View? {
         binding = FragmentCategoryBinding.inflate(inflater, container, false)
         homeViewModel = ViewModelProvider(this)[HomeViewModel::class.java]
-        productViewModel = ViewModelProvider(this)[ProductViewModel::class.java]
+        productViewModel = ViewModelProvider(requireActivity())[ProductViewModel::class.java]
         sharedHelper = SharedHelper(requireContext())
         arguments?.let {
             catId = it.getInt("catId")
@@ -360,6 +360,12 @@ class CategoryFragment : Fragment() {
 
     }
 
+    private fun productIdAt(data: ArrayList<ProductResponse.Data>, position: Int): Int? {
+        if (position !in data.indices) return null
+        val id = data[position].id ?: data[position].productId
+        return id?.takeIf { it > 0 }
+    }
+
     private fun  catProductRecyc(data: ArrayList<ProductResponse.Data>) {
         var spanCount = 1
         if (sharedHelper.isGrid) {
@@ -379,21 +385,33 @@ class CategoryFragment : Fragment() {
                     if (Constants.User.token.isNullOrEmpty()){
                         findNavController().navigate(R.id.action_category_fragment_to_login_fragment)
                     }else{
-                        addToCart(data[position]!!.id!!,data[position]!!.price!!.toString())
+                        val pid = productIdAt(data, position) ?: run {
+                            UiUtils.showToast(requireContext(), getString(R.string.parsing_error), false)
+                            return@onClickItem
+                        }
+                        addToCart(pid, data[position].price.toString())
                     }
                 }
                 else if (type=="fav"){
                     if (Constants.User.token.isNullOrEmpty()){
                         findNavController().navigate(R.id.action_category_fragment_to_login_fragment)
                     }else{
-                        updateFavourites(data[position]!!.id!!,1)
+                        val pid = productIdAt(data, position) ?: run {
+                            UiUtils.showToast(requireContext(), getString(R.string.parsing_error), false)
+                            return@onClickItem
+                        }
+                        updateFavourites(pid,1)
                     }
                 }
                 else if (type=="basket"){
                     if (Constants.User.token.isNullOrEmpty()){
                         findNavController().navigate(R.id.action_category_fragment_to_login_fragment)
                     }else{
-                        basketProductId = data[position]!!.id!!
+                        val pid = productIdAt(data, position) ?: run {
+                            UiUtils.showToast(requireContext(), getString(R.string.parsing_error), false)
+                            return@onClickItem
+                        }
+                        basketProductId = pid
                         binding.basketFrame.visibility = View.VISIBLE
                         getBasketData()
                     }
@@ -404,10 +422,13 @@ class CategoryFragment : Fragment() {
         },object :
             OnClickListener {
             override fun onClickItem(position: Int) {
-                val args= Bundle()
-                args.putInt("productId", data[position]!!.id!!)
-              findNavController().navigate(R.id.action_categoryFragment_to_productDetailFragment,args)
-
+                val pid = productIdAt(data, position) ?: run {
+                    UiUtils.showToast(requireContext(), getString(R.string.parsing_error), false)
+                    return
+                }
+                val args = Bundle()
+                args.putInt("productId", pid)
+                findNavController().navigate(R.id.action_categoryFragment_to_productDetailFragment, args)
             }
         },"category")
     }

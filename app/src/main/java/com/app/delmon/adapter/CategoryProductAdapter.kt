@@ -5,7 +5,6 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.RecyclerView
 import com.app.delmon.Model.ProductResponse
 import com.app.delmon.R
@@ -46,6 +45,7 @@ class CategoryProductAdapter(
     }
 
     override fun onBindViewHolder(holder: CategoryParentViewHolder, position: Int) {
+        val item = data.getOrNull(position) ?: return
 
         holder.binding.root.setOnClickListener {
             onRootClickListener.onClickItem(position)
@@ -81,26 +81,27 @@ class CategoryProductAdapter(
             remove.setOnClickListener {
                 onClickListener.onClickItem(position,"remove")
             }
-            if(sharedHelper!!.language == "ar") {
-                productName.text = data[position]!!.arProductName
-                productDesc.text = data[position]!!.arDescription
+            if (sharedHelper.language == "ar") {
+                productName.text = (item.arProductName ?: "").ifBlank { item.name ?: "" }
+                productDesc.text = item.arDescription ?: ""
 
-            }else{
-                productName.text = data[position].name
-                productDesc.text = data[position]!!.description
+            } else {
+                productName.text = (item.name ?: "").ifBlank { item.enProductName ?: "" }
+                productDesc.text = item.description ?: ""
             }
-            productWeight.text = data[position]!!.weight
-            productSize1.text = data[position]!!.weight
-            productPrice.text = data[position]!!.price.toString() + " BD"
-            productPrice1.text = data[position]!!.price.toString() + " BD"
+            productWeight.text = item.weight ?: ""
+            productSize1.text = item.weight ?: ""
+            productPrice.text = item.price.toString() + " BD"
+            productPrice1.text = item.price.toString() + " BD"
             if (Constants.User.apptype==2){
                 addBasket.visibility = View.GONE
             }
-            if (data.isNotEmpty() && !data[position].image.isNullOrEmpty()) {
-                Glide.with(context).load(data[position].image!![0])
+            val firstImage = item.image?.firstOrNull { !it.isNullOrBlank() }
+            if (firstImage != null) {
+                Glide.with(context).load(firstImage)
                     .placeholder(R.drawable.placeholder_image).error(R.drawable.placeholder_image)
                     .into(imageView3)
-            }else{
+            } else {
                 Glide.with(context).load(R.drawable.placeholder_image)
                     .placeholder(R.drawable.placeholder_image).error(R.drawable.placeholder_image)
                     .into(imageView3)

@@ -15,7 +15,7 @@ import com.app.delmon.network.Api
 import com.app.delmon.network.ApiInput
 import com.app.delmon.network.UrlHelper
 import com.app.delmon.utils.Constants
-import com.google.gson.Gson
+import com.app.delmon.utils.postFromJson
 import org.json.JSONObject
 
 class LoginViewModel(application: Application) : AndroidViewModel(application) {
@@ -60,15 +60,13 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
         ), object : ApiResponseCallback {
             override fun setResponseSuccess(jsonObject: JSONObject) {
                 Log.d("TAG", "setResponseSuccess: $jsonObject")
-                val gson = Gson()
-                val response: CheckUserResponse =  gson.fromJson(jsonObject.toString(), CheckUserResponse::class.java)
-                commonResponseModel.value = response
+                commonResponseModel.postFromJson(jsonObject, CheckUserResponse::class.java) { err ->
+                    CheckUserResponse().apply { error = true; message = err }
+                }
             }
 
             override fun setErrorResponse(error: String) {
-                val response = CheckUserResponse()
-                response.error = true
-                commonResponseModel.value = response
+                commonResponseModel.value = CheckUserResponse().apply { this.error = true; message = error }
             }
 
         })
@@ -94,15 +92,13 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
         ), object : ApiResponseCallback {
             override fun setResponseSuccess(jsonObject: JSONObject) {
                 Log.d("TAG", "setResponseSuccess: $jsonObject")
-                val gson = Gson()
-                val response: UserResponse =  gson.fromJson(jsonObject.toString(), UserResponse::class.java)
-                commonResponseModel.value = response
+                commonResponseModel.postFromJson(jsonObject, UserResponse::class.java) { err ->
+                    UserResponse().apply { error = true; message = err }
+                }
             }
 
             override fun setErrorResponse(error: String) {
-                val response = UserResponse()
-                response.error = true
-                commonResponseModel.value = response
+                commonResponseModel.value = UserResponse().apply { this.error = true; message = error }
             }
 
         })
@@ -130,15 +126,13 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
         ), object : ApiResponseCallback {
             override fun setResponseSuccess(jsonObject: JSONObject) {
                 Log.d("TAG", "setResponseSuccess: $jsonObject")
-                val gson = Gson()
-                val response: CheckUserResponse =  gson.fromJson(jsonObject.toString(), CheckUserResponse::class.java)
-                commonResponseModel.value = response
+                commonResponseModel.postFromJson(jsonObject, CheckUserResponse::class.java) { err ->
+                    CheckUserResponse().apply { error = true; message = err }
+                }
             }
 
             override fun setErrorResponse(error: String) {
-                val response = CheckUserResponse()
-                response.error = true
-                commonResponseModel.value = response
+                commonResponseModel.value = CheckUserResponse().apply { this.error = true; message = error }
             }
 
         })
@@ -164,15 +158,13 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
         ), object : ApiResponseCallback {
             override fun setResponseSuccess(jsonObject: JSONObject) {
                 Log.d("TAG", "setResponseSuccess: $jsonObject")
-                val gson = Gson()
-                val response: UserResponse =  gson.fromJson(jsonObject.toString(), UserResponse::class.java)
-                commonResponseModel.value = response
+                commonResponseModel.postFromJson(jsonObject, UserResponse::class.java) { err ->
+                    UserResponse().apply { error = true; message = err }
+                }
             }
 
             override fun setErrorResponse(error: String) {
-                val response = UserResponse()
-                response.error = true
-                commonResponseModel.value = response
+                commonResponseModel.value = UserResponse().apply { this.error = true; message = error }
             }
 
         })
@@ -192,15 +184,13 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
         ), object : ApiResponseCallback {
             override fun setResponseSuccess(jsonObject: JSONObject) {
                 Log.d("TAG", "setResponseSuccess: $jsonObject")
-                val gson = Gson()
-                val response: UserResponse =  gson.fromJson(jsonObject.toString(), UserResponse::class.java)
-                commonResponseModel.value = response
+                commonResponseModel.postFromJson(jsonObject, UserResponse::class.java) { err ->
+                    UserResponse().apply { error = true; message = err }
+                }
             }
 
             override fun setErrorResponse(error: String) {
-                val response = UserResponse()
-                response.error = true
-                commonResponseModel.value = response
+                commonResponseModel.value = UserResponse().apply { this.error = true; message = error }
             }
 
         })
@@ -221,15 +211,13 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
         ), object : ApiResponseCallback {
             override fun setResponseSuccess(jsonObject: JSONObject) {
                 Log.d("TAG", "setResponseSuccess: $jsonObject")
-                val gson = Gson()
-                val response: SettingsResponses =  gson.fromJson(jsonObject.toString(), SettingsResponses::class.java)
-                commonResponseModel.value = response
+                commonResponseModel.postFromJson(jsonObject, SettingsResponses::class.java) {
+                    SettingsResponses(success = false)
+                }
             }
 
             override fun setErrorResponse(error: String) {
-                val response = SettingsResponses()
-                response.success = false
-                commonResponseModel.value = response
+                commonResponseModel.value = SettingsResponses(success = false)
             }
 
         })

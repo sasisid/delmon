@@ -13,7 +13,7 @@ import com.app.delmon.network.Api
 import com.app.delmon.network.ApiInput
 import com.app.delmon.network.UrlHelper
 import com.app.delmon.utils.Constants
-import com.google.gson.Gson
+import com.app.delmon.utils.postFromJson
 import org.json.JSONObject
 import kotlin.collections.HashMap
 
@@ -54,15 +54,13 @@ class PaymentViewModel(application: Application) : AndroidViewModel(application)
         ), object : ApiResponseCallback {
             override fun setResponseSuccess(jsonObject: JSONObject) {
                 Log.d("TAG", "setResponseSuccess: $jsonObject")
-                val gson = Gson()
-                val response: PaymentSession =  gson.fromJson(jsonObject.toString(), PaymentSession::class.java)
-                commonResponseModel.value = response
+                commonResponseModel.postFromJson(jsonObject, PaymentSession::class.java) {
+                    PaymentSession(result = "FAILURE")
+                }
             }
 
             override fun setErrorResponse(error: String) {
-                val response = PaymentSession()
-                response.result = "FAILURE"
-                commonResponseModel.value = response
+                commonResponseModel.value = PaymentSession(result = "FAILURE")
             }
 
         })
@@ -84,15 +82,13 @@ class PaymentViewModel(application: Application) : AndroidViewModel(application)
         ), object : ApiResponseCallback {
             override fun setResponseSuccess(jsonObject: JSONObject) {
                 Log.d("TAG", "setResponseSuccess: $jsonObject")
-                val gson = Gson()
-                val response: PaymentSession =  gson.fromJson(jsonObject.toString(), PaymentSession::class.java)
-                commonResponseModel.value = response
+                commonResponseModel.postFromJson(jsonObject, PaymentSession::class.java) {
+                    PaymentSession(result = "FAILURE")
+                }
             }
 
             override fun setErrorResponse(error: String) {
-                val response = PaymentSession()
-                response.result = "FAILURE"
-                commonResponseModel.value = response
+                commonResponseModel.value = PaymentSession(result = "FAILURE")
             }
 
         })

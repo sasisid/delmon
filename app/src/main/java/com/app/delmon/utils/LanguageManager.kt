@@ -14,19 +14,27 @@ import java.util.*
 
 object LanguageManager {
 
+    /** First install and fallback — never derived from the device locale. */
+    const val DEFAULT_LANGUAGE = "ar"
+
+    /** Only locales offered in settings; anything else is coerced to [DEFAULT_LANGUAGE]. */
+    const val LANGUAGE_ENGLISH = "en"
+
     fun onAttach(context: Context): Context {
-        val lang = getPersistedData(context, Locale.getDefault().language)
+        val lang = normalizeLanguageCode(SharedHelper(context).language)
         return setLocale(context, lang)
     }
 
     fun onAttach(context: Context, defaultLanguage: String): Context {
-        val lang = getPersistedData(context, defaultLanguage)
+        val lang = normalizeLanguageCode(
+            SharedHelper(context).language.ifEmpty { defaultLanguage }
+        )
         return setLocale(context, lang)
     }
 
-    private fun getPersistedData(context: Context, defaultLanguage: String): String {
-        val sharedHelper = SharedHelper(context)
-        return if (sharedHelper.language.isEmpty()) defaultLanguage else sharedHelper.language
+    fun normalizeLanguageCode(code: String): String {
+        val c = code.lowercase(Locale.ROOT).trim()
+        return if (c == LANGUAGE_ENGLISH) LANGUAGE_ENGLISH else DEFAULT_LANGUAGE
     }
 
     fun setLocale(context: Context, languageCode: String): Context {
@@ -42,7 +50,7 @@ object LanguageManager {
         val locale = Locale(language)
         Locale.setDefault(locale)
 
-        val configuration = context.resources.configuration
+        val configuration = Configuration(context.resources.configuration)
         configuration.setLocale(locale)
         configuration.setLayoutDirection(locale)
 
@@ -65,17 +73,17 @@ object LanguageManager {
     }
 
     fun changeLanguage(context: Context, languageCode: String) {
-        val locale = Locale(languageCode)
+        val lang = normalizeLanguageCode(languageCode)
+        val locale = Locale(lang)
         Locale.setDefault(locale)
 
         val configuration = Configuration(context.resources.configuration)
         configuration.setLocale(locale)
-
-        // Set layout direction based on the language
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             configuration.setLayoutDirection(locale)
         }
 
+        @Suppress("DEPRECATION")
         context.resources.updateConfiguration(configuration, context.resources.displayMetrics)
     }
 
@@ -85,7 +93,6 @@ object LanguageManager {
     }
 
     private fun isRTL(languageCode: String): Boolean {
-        // Check if the language is a right-to-left language
-        return languageCode.equals("ar", ignoreCase = true) || languageCode.equals("fa", ignoreCase = true)
+        return normalizeLanguageCode(languageCode) == DEFAULT_LANGUAGE
     }
 }

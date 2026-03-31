@@ -23,7 +23,8 @@ class SplashScreenActivity : BaseActivity() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         WindowCompat.setDecorFitsSystemWindows(window, false)
         sharedHelper= SharedHelper(this)
-        LanguageManager.changeLanguage(this,sharedHelper.language)
+        Constants.User.language = sharedHelper.language
+        LanguageManager.changeLanguage(this, sharedHelper.language)
         Constants.User.isLoggedIn = sharedHelper.loggedIn
          Constants.User.token = sharedHelper.token
          Constants.User.usertype = sharedHelper.userType

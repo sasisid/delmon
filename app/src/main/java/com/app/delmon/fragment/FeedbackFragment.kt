@@ -45,7 +45,7 @@ class FeedbackFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentFeedbackBinding.inflate(inflater, container, false)
-        productViewModel = ViewModelProvider(this)[ProductViewModel::class.java]
+        productViewModel = ViewModelProvider(requireActivity())[ProductViewModel::class.java]
 
     binding.feedbackBtn.setOnClickListener {
         DialogUtils.showDialog(requireContext(),"","Are you Sure to Submit",requireContext().resources.getString(R.string.ok),requireContext().resources.getString(R.string.cancel),object :

@@ -9,13 +9,16 @@ import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat.recreate
+import androidx.core.os.LocaleListCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.app.delmon.R
 import com.app.delmon.Session.SharedHelper
 import com.app.delmon.activity.MainActivity
 import com.app.delmon.databinding.FragmentSettingsBinding
+import com.app.delmon.utils.Constants
 import com.app.delmon.utils.LanguageManager
 import com.app.delmon.utils.UiUtils
 import java.util.*
@@ -48,8 +51,9 @@ class SettingsFragment : Fragment() {
     ): View? {
         binding = FragmentSettingsBinding.inflate(inflater, container, false)
         sharedHelper= SharedHelper(requireContext())
+        MainActivity.languageSelected = sharedHelper.language
 
-        if(sharedHelper.language == "ar") {
+        if(sharedHelper.language == LanguageManager.DEFAULT_LANGUAGE) {
             binding.arabicCheck.setImageResource(R.drawable.icon_awesome_check_circle__selected);
             binding.englishCheck.setImageResource(R.drawable.icon_awesome_check_circle_unselected);
             requireActivity().window.decorView.layoutDirection = View.LAYOUT_DIRECTION_RTL
@@ -84,21 +88,20 @@ class SettingsFragment : Fragment() {
                 languageFrame.visibility = View.VISIBLE
             }
             arabicCard.setOnClickListener{
-                sharedHelper.language = "ar"
-                MainActivity.languageSelected = "ar"
-                changeLanguage("ar")
+                sharedHelper.language = LanguageManager.DEFAULT_LANGUAGE
+                MainActivity.languageSelected = LanguageManager.DEFAULT_LANGUAGE
+                changeLanguage(LanguageManager.DEFAULT_LANGUAGE)
                 arabicCheck.setImageResource(R.drawable.icon_awesome_check_circle__selected);
                 englishCheck.setImageResource(R.drawable.icon_awesome_check_circle_unselected);
 
             }
             
-            englishCard.setOnClickListener{
-                changeLanguage("en")
-                sharedHelper.language = "en"
-                MainActivity.languageSelected = "en"
-                arabicCheck.setImageResource(R.drawable.icon_awesome_check_circle_unselected);
-                englishCheck.setImageResource(R.drawable.icon_awesome_check_circle__selected);
-
+            englishCard.setOnClickListener {
+                sharedHelper.language = LanguageManager.LANGUAGE_ENGLISH
+                MainActivity.languageSelected = LanguageManager.LANGUAGE_ENGLISH
+                arabicCheck.setImageResource(R.drawable.icon_awesome_check_circle_unselected)
+                englishCheck.setImageResource(R.drawable.icon_awesome_check_circle__selected)
+                changeLanguage(LanguageManager.LANGUAGE_ENGLISH)
             }
             
             aboutUs.setOnClickListener {
@@ -140,30 +143,22 @@ class SettingsFragment : Fragment() {
         res.updateConfiguration(conf, dm)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             res.configuration.setLayoutDirection(language)
-            (when (lang) {
-                "ar" -> {
-                    View.LAYOUT_DIRECTION_RTL
-                }
-                "hi" -> {
-                    View.LAYOUT_DIRECTION_LTR
-                }
-                else -> {
-                    View.LAYOUT_DIRECTION_LTR
-                }
+            (if (lang == LanguageManager.DEFAULT_LANGUAGE) {
+                View.LAYOUT_DIRECTION_RTL
+            } else {
+                View.LAYOUT_DIRECTION_LTR
             }).also { requireActivity().window.decorView.layoutDirection = it }
         }
         findNavController().navigate(R.id.action_settings_fragment_self)
     }
     private fun changeLanguage(languageCode: String) {
-        setLocale(languageCode)
-        LanguageManager.changeLanguage(requireActivity(), languageCode)
-
-        // Set layout direction for the root view
+        val code = LanguageManager.normalizeLanguageCode(languageCode)
+        Constants.User.language = code
+        AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(code))
+        setLocale(code)
+        LanguageManager.changeLanguage(requireActivity(), code)
         val rootView = requireActivity().findViewById<View>(android.R.id.content)
-        LanguageManager.setLayoutDirection(rootView, languageCode)
-
-        // You can also update UI elements or reload content if needed
-        // For example, recreate the activity to apply the changes
+        LanguageManager.setLayoutDirection(rootView, code)
         recreate(requireActivity())
     }
 
