@@ -81,13 +81,13 @@ class CategoryProductAdapter(
             remove.setOnClickListener {
                 onClickListener.onClickItem(position,"remove")
             }
-            if(sharedHelper!!.language == "en") {
-                productName.text = data[position]!!.name
-                productDesc.text = data[position]!!.description
+            if(sharedHelper!!.language == "ar") {
+                productName.text = data[position]!!.arProductName
+                productDesc.text = data[position]!!.arDescription
 
             }else{
-                productName.text = data[position].arProductName
-                productDesc.text = data[position]!!.arDescription
+                productName.text = data[position].name
+                productDesc.text = data[position]!!.description
             }
             productWeight.text = data[position]!!.weight
             productSize1.text = data[position]!!.weight

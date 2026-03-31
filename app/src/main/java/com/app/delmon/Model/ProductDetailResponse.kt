@@ -47,8 +47,11 @@ data class ProductDetailResponse(
             var createdAt: String? = null,
             var id: Int? = null,
             var ingredients: String? = null,
+            var arIngredients: String? = null,
             var name: String? = null,
+            var arName: String? = null,
             var steps: String? = null,
+            var arSteps: String? = null,
             var thumbnailImage: String? = null,
             var updatedAt: String? = null,
             var videos: String? = null

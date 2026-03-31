@@ -503,7 +503,7 @@ class ProductDetailsFragment : Fragment() {
                 }else{
                     data[position].normalPrice!!
                 }
-                binding.textView5.text = "$price BD"
+                binding.amt.text = "$price BD"
                 binding.weight.text = data[position].weight!!
                 if(data[position].stock != null) {
                     if (data[position].stock!! > 0) {
@@ -563,9 +563,17 @@ class ProductDetailsFragment : Fragment() {
                 if (data[0].stock!! > 0) {
                     binding.stock.text = resources.getString(R.string.instock)
                     binding.stock.setBackgroundColor(requireContext().resources.getColor(R.color.secondary_feeding_color))
+                    ViewCompat.setBackgroundTintList(
+                        binding.stock,
+                        ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.secondary_feeding_color))
+                    )
                 } else {
                     binding. stock.text = resources.getString(R.string.out_of_stock)
                     binding.stock.setBackgroundColor(requireContext().resources.getColor(R.color.delmon_red))
+                    ViewCompat.setBackgroundTintList(
+                        binding.stock,
+                        ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.delmon_red))
+                    )
                 }
                 isStock = data[0].stock!!
             }
@@ -587,7 +595,7 @@ class ProductDetailsFragment : Fragment() {
         } else {
             productId = 0
             price = 0.0
-            binding.textView5.text = "$price BD"
+            binding.amt.text = "$price BD"
             Log.e("appSample", "isNullOrEmpty_ELSE: $price")
             binding.weight.text ="0"
             updateCartLayout(0)

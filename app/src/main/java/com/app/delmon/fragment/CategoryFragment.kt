@@ -31,12 +31,14 @@ import com.app.delmon.utils.DialogUtils
 import com.app.delmon.utils.UiUtils
 import com.app.delmon.viewmodel.HomeViewModel
 import com.app.delmon.viewmodel.ProductViewModel
+import com.app.delmon.Session.SharedHelper
 
 
 class CategoryFragment : Fragment() {
     private lateinit var binding: FragmentCategoryBinding
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var productViewModel: ProductViewModel
+    private lateinit var sharedHelper: SharedHelper
     var catId = 0
     private var catIdPosition = 0
     var basketProductId = 0
@@ -59,6 +61,7 @@ class CategoryFragment : Fragment() {
         binding = FragmentCategoryBinding.inflate(inflater, container, false)
         homeViewModel = ViewModelProvider(this)[HomeViewModel::class.java]
         productViewModel = ViewModelProvider(this)[ProductViewModel::class.java]
+        sharedHelper = SharedHelper(requireContext())
         arguments?.let {
             catId = it.getInt("catId")
             catIdPosition = it.getInt("catIdPosition",0)
@@ -67,9 +70,18 @@ class CategoryFragment : Fragment() {
         binding.back.setOnClickListener {
             findNavController().popBackStack()
         }
+        if (sharedHelper.isGrid) {
+            binding.grid.visibility = View.GONE
+            binding.list.visibility = View.VISIBLE
+        } else {
+            binding.grid.visibility = View.VISIBLE
+            binding.list.visibility = View.GONE
+        }
+
         binding.grid.setOnClickListener {
             binding.grid.visibility = View.GONE
             binding.list.visibility = View.VISIBLE
+            sharedHelper.isGrid = true
             binding.catProductRecyc.layoutManager = GridLayoutManager(requireContext(),2,
                 GridLayoutManager.VERTICAL,false)
             binding.catProductRecyc.adapter?.notifyDataSetChanged()
@@ -78,6 +90,7 @@ class CategoryFragment : Fragment() {
         binding.list.setOnClickListener {
             binding.grid.visibility = View.VISIBLE
             binding.list.visibility = View.GONE
+            sharedHelper.isGrid = false
             binding.catProductRecyc.layoutManager = GridLayoutManager(requireContext(),1,
                 GridLayoutManager.VERTICAL,false)
             binding.catProductRecyc.adapter?.notifyDataSetChanged()
@@ -348,7 +361,11 @@ class CategoryFragment : Fragment() {
     }
 
     private fun  catProductRecyc(data: ArrayList<ProductResponse.Data>) {
-        binding.catProductRecyc.layoutManager = GridLayoutManager(requireContext(),1,
+        var spanCount = 1
+        if (sharedHelper.isGrid) {
+            spanCount = 2
+        }
+        binding.catProductRecyc.layoutManager = GridLayoutManager(requireContext(),spanCount,
             GridLayoutManager.VERTICAL,false)
         binding.catProductRecyc.scheduleLayoutAnimation();
         binding.catProductRecyc.adapter = CategoryProductAdapter(requireContext(),data,object :

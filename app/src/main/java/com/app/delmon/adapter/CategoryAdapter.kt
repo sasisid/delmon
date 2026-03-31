@@ -9,9 +9,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.app.delmon.Model.CategoryResponse
 import com.app.delmon.R
+import com.app.delmon.Session.SharedHelper
 import com.app.delmon.databinding.CategoryCardBinding
 import com.app.delmon.interfaces.OnClickListener
 
+private lateinit var sharedHelper: SharedHelper
 
 class CategoryAdapter(
     var context: Context,
@@ -31,6 +33,8 @@ class CategoryAdapter(
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryParentViewHolder {
+        sharedHelper= SharedHelper(context)
+
         return CategoryParentViewHolder(
             LayoutInflater.from(context).inflate(
                 R.layout.category_card,
@@ -42,7 +46,11 @@ class CategoryAdapter(
 
     override fun onBindViewHolder(holder: CategoryParentViewHolder, position: Int) {
         row_index = positiontofix
-        holder.binding.catName.text = data[position]!!.name
+        if(sharedHelper!!.language == "ar") {
+            holder.binding.catName.text = data[position]!!.arName
+        }else{
+            holder.binding.catName.text = data[position]!!.name
+        }
         holder.binding.root.setOnClickListener(){
             positiontofix = position
             row_index = positiontofix

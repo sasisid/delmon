@@ -31,12 +31,13 @@
     <string name="exit_press_back_twice_message">Press Back again to Exit</string>
     <string name="what_are_you_looking">What are your looking For ?</string>
     <string name="Select_desc"></string>
-    <string name="poultry">Poultry</string>
-    <string name="feeding">Feeding</string>
+    <string name="poultry">Farm Chicken</string>
+    <string name="feeding">Delmon Feed</string>
     <string name="getin">Get In</string>
     <string name="search_text">What would you like to Search</string>
     <string name="select_your_category">Select Your Category</string>
     <string name="title">Title</string>
+    <string name="categories">Categories</string>
     <string name="product_list">Product List</string>
     <string name="instock">In Stock</string>
     <string name="dummy_amt">45BD</string>

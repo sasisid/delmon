@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.WindowCompat
 import androidx.viewpager.widget.ViewPager
 import com.app.delmon.R
 import com.app.delmon.Session.SharedHelper
@@ -13,7 +14,7 @@ import com.app.delmon.databinding.ActivityOnBoardingBinding
 import com.app.delmon.utils.LanguageManager
 import me.relex.circleindicator.CircleIndicator
 
-class OnBoardingActivity : AppCompatActivity() {
+class OnBoardingActivity : BaseActivity() {
 
     private lateinit var mViewPager: ViewPager
     private lateinit var btnBack: TextView
@@ -26,6 +27,8 @@ class OnBoardingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityOnBoardingBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        WindowCompat.setDecorFitsSystemWindows(window, true)
+
         sharedHelper = SharedHelper(this)
         LanguageManager.changeLanguage(this,sharedHelper.language)
 

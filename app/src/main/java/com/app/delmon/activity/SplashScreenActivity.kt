@@ -13,7 +13,7 @@ import com.app.delmon.utils.BaseUtils
 import com.app.delmon.utils.Constants
 import com.app.delmon.utils.LanguageManager
 
-class SplashScreenActivity : AppCompatActivity() {
+class SplashScreenActivity : BaseActivity() {
 
     private lateinit var sharedHelper: SharedHelper
 

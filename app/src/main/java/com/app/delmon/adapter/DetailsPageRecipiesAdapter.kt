@@ -7,9 +7,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.app.delmon.Model.ProductDetailResponse
 import com.app.delmon.R
+import com.app.delmon.Session.SharedHelper
 import com.app.delmon.databinding.RecipesCardBinding
 import com.app.delmon.interfaces.OnClickListener
 import com.squareup.picasso.Picasso
+
+private lateinit var sharedHelper: SharedHelper
 
 class DetailsPageRecipiesAdapter(
     var context: Context,
@@ -25,6 +28,8 @@ class DetailsPageRecipiesAdapter(
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryParentViewHolder {
+        sharedHelper= SharedHelper(context)
+
         return CategoryParentViewHolder(
             LayoutInflater.from(context).inflate(
                 R.layout.recipes_card,
@@ -38,8 +43,13 @@ class DetailsPageRecipiesAdapter(
 
 
         holder.binding.apply {
-            recipesName.text = data!![position]!!.name
-            title.text = data!![position]!!.name
+            if(sharedHelper.language == "ar") {
+                recipesName.text = data!![position]!!.arName
+                title.text = data!![position]!!.arName
+            }else{
+                recipesName.text = data!![position]!!.name
+                title.text = data!![position]!!.name
+            }
             Picasso.get().load(data!![position]!!.thumbnailImage).placeholder(R.drawable.placeholder_image).error(
                 R.drawable.placeholder_image).into(thumbnailImage)
                 if (from=="first"){

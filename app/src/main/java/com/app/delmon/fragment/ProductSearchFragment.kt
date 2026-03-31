@@ -214,7 +214,7 @@ class ProductSearchFragment : Fragment() {
 
     private fun productRecyc(data: ArrayList<ProductResponse.Data>) {
         binding.productRecyc.layoutManager = GridLayoutManager(
-            requireContext(), 1,
+            requireContext(), 2,
             GridLayoutManager.VERTICAL, false
         )
         binding.productRecyc.scheduleLayoutAnimation();

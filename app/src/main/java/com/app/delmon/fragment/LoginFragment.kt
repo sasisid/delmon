@@ -60,7 +60,7 @@ class LoginFragment : Fragment() {
     }
 
     fun checkUser(mobile: String) {
-        loginViewModel.checkUser(requireContext(),mobile,"+966")
+        loginViewModel.checkUser(requireContext(),mobile,"+973")
             .observe(viewLifecycleOwner
             ) {
                 Log.d(ContentValues.TAG, "categorydata: " + it)

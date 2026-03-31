@@ -651,6 +651,14 @@ class SharedHelper(context: Context) {
 
         }
 
+    var isGrid: Boolean
+        get() : Boolean {
+            return sharedPreference.getBoolean("isGrid")
+        }
+        set(value) {
+            sharedPreference.putBoolean("isGrid", value)
+        }
+
 
 }
 

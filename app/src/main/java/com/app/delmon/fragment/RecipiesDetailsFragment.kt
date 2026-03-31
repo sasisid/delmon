@@ -14,6 +14,7 @@ import android.widget.MediaController
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.app.delmon.R
+import com.app.delmon.Session.SharedHelper
 import com.app.delmon.databinding.FragmentRecipiesDetailsBinding
 import com.squareup.picasso.Picasso
 
@@ -22,6 +23,8 @@ class RecipiesDetailsFragment : Fragment() {
 
 
     private lateinit var binding: FragmentRecipiesDetailsBinding
+    private lateinit var sharedHelper: SharedHelper
+
     var recipiesPosition:Int =0
     var from:String = ""
     var videoUrl:String = ""
@@ -42,99 +45,158 @@ class RecipiesDetailsFragment : Fragment() {
         var data = RecipesFragment.recipiesData
         var  detailsData = ProductDetailsFragment.recipiesData
 //        val typeface = Typeface.createFromAsset(requireContext().assets, "font/poppins_regular.ttf")
+        Log.d("detailsData", "onCreateView: ${detailsData[recipiesPosition].toString()}")
         binding.back.setOnClickListener {
             findNavController().popBackStack()
         }
+        sharedHelper = SharedHelper(requireContext())
+
         binding.apply {
             if (from=="details") {
-                pageTitle.text = detailsData[recipiesPosition].name
+                if(sharedHelper.language == "ar") {
+                    pageTitle.text = detailsData[recipiesPosition].arName
+
+                    ingredientContent.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        Html.fromHtml(
+                            detailsData[recipiesPosition].arIngredients,
+                            Html.FROM_HTML_MODE_COMPACT
+                        )
+                    } else {
+                        Html.fromHtml(detailsData[recipiesPosition].arIngredients)
+                    }
+                    stepsContent.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        Html.fromHtml(
+                            detailsData[recipiesPosition].arSteps,
+                            Html.FROM_HTML_MODE_COMPACT
+                        )
+                    } else {
+                        Html.fromHtml(detailsData[recipiesPosition].arSteps)
+                    }
+                }else {
+                    pageTitle.text = detailsData[recipiesPosition].name
+
+                    ingredientContent.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        Html.fromHtml(
+                            detailsData[recipiesPosition].ingredients,
+                            Html.FROM_HTML_MODE_COMPACT
+                        )
+                    } else {
+                        Html.fromHtml(detailsData[recipiesPosition].ingredients)
+                    }
+                    stepsContent.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        Html.fromHtml(
+                            detailsData[recipiesPosition].steps,
+                            Html.FROM_HTML_MODE_COMPACT
+                        )
+                    } else {
+                        Html.fromHtml(detailsData[recipiesPosition].steps)
+                    }
+                }
                 Picasso.get().load(detailsData!![recipiesPosition]!!.thumbnailImage)
-                    .placeholder(R.drawable.placeholder_image).error(
-                    R.drawable.placeholder_image
-                ).into(recipiesImg)
-                ingredientContent.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    Html.fromHtml(detailsData[recipiesPosition].ingredients, Html.FROM_HTML_MODE_COMPACT)
-                } else {
-                    Html.fromHtml(detailsData[recipiesPosition].ingredients)
-                }
-                stepsContent.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    Html.fromHtml(detailsData[recipiesPosition].steps, Html.FROM_HTML_MODE_COMPACT)
-                } else {
-                    Html.fromHtml(detailsData[recipiesPosition].steps)
-                }
-                videoUrl = detailsData[recipiesPosition].videos!!
-                Log.d("TAG", "videoView: ${detailsData[recipiesPosition].videos}")
-            }else{
-                pageTitle.text = RecipesFragment.recipiesData[recipiesPosition].name
-                Picasso.get().load(data!![recipiesPosition]!!.thumbnailImage)
                     .placeholder(R.drawable.placeholder_image).error(
                         R.drawable.placeholder_image
                     ).into(recipiesImg)
-                ingredientContent.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    Log.e("delmonUser", "Ingredient: ${data[recipiesPosition].ingredients}")
+                videoUrl = detailsData[recipiesPosition].videos!!
+                Log.d("TAG", "videoView: ${detailsData[recipiesPosition].videos}")
+            }else{
+                if(sharedHelper.language == "ar") {
+                    pageTitle.text = RecipesFragment.recipiesData[recipiesPosition].arName
 
-                    if(data[recipiesPosition].ingredients != null) {
-                        Html.fromHtml(data[recipiesPosition].ingredients, Html.FROM_HTML_MODE_COMPACT)
-                    } else {
-                        ""
-                    }
+                    ingredientContent.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        Log.e("delmonUser", "Ingredient: ${data[recipiesPosition].arIngredients}")
+
+                        if (data[recipiesPosition].arIngredients != null) {
+                            Html.fromHtml(
+                                data[recipiesPosition].arIngredients,
+                                Html.FROM_HTML_MODE_COMPACT
+                            )
+                        } else {
+                            ""
+                        }
 //                    Html.fromHtml(data[recipiesPosition].ingredients, Html.FROM_HTML_MODE_COMPACT)
-                } else {
-                    if(data[recipiesPosition].ingredients != null) {
-                        Html.fromHtml(data[recipiesPosition].ingredients)
                     } else {
-                        ""
-                    }
+                        if (data[recipiesPosition].arIngredients != null) {
+                            Html.fromHtml(data[recipiesPosition].arIngredients)
+                        } else {
+                            ""
+                        }
 //                    Html.fromHtml("" + data[recipiesPosition].ingredients)
-                }
-                stepsContent.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-
-                    if(data[recipiesPosition].steps != null) {
-                        Html.fromHtml("" + data[recipiesPosition].steps, Html.FROM_HTML_MODE_COMPACT)
-                    } else {
-                        ""
                     }
+                    stepsContent.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+
+                        if (data[recipiesPosition].arSteps != null) {
+                            Html.fromHtml(
+                                "" + data[recipiesPosition].arSteps,
+                                Html.FROM_HTML_MODE_COMPACT
+                            )
+                        } else {
+                            ""
+                        }
 //                    Html.fromHtml("" + data[recipiesPosition].steps, Html.FROM_HTML_MODE_COMPACT)
-                } else {
-                    if(data[recipiesPosition].steps != null) {
-                        Html.fromHtml("" + data[recipiesPosition].steps)
                     } else {
-                        ""
-                    }
+                        if (data[recipiesPosition].arSteps != null) {
+                            Html.fromHtml("" + data[recipiesPosition].arSteps)
+                        } else {
+                            ""
+                        }
 //                    Html.fromHtml("" + data[recipiesPosition].steps)
-                }
+                    }
+                }else {
+                    pageTitle.text = RecipesFragment.recipiesData[recipiesPosition].name
 
+                    ingredientContent.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        Log.e("delmonUser", "Ingredient: ${data[recipiesPosition].ingredients}")
+
+                        if (data[recipiesPosition].ingredients != null) {
+                            Html.fromHtml(
+                                data[recipiesPosition].ingredients,
+                                Html.FROM_HTML_MODE_COMPACT
+                            )
+                        } else {
+                            ""
+                        }
+//                    Html.fromHtml(data[recipiesPosition].ingredients, Html.FROM_HTML_MODE_COMPACT)
+                    } else {
+                        if (data[recipiesPosition].ingredients != null) {
+                            Html.fromHtml(data[recipiesPosition].ingredients)
+                        } else {
+                            ""
+                        }
+//                    Html.fromHtml("" + data[recipiesPosition].ingredients)
+                    }
+                    stepsContent.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+
+                        if (data[recipiesPosition].steps != null) {
+                            Html.fromHtml(
+                                "" + data[recipiesPosition].steps,
+                                Html.FROM_HTML_MODE_COMPACT
+                            )
+                        } else {
+                            ""
+                        }
+//                    Html.fromHtml("" + data[recipiesPosition].steps, Html.FROM_HTML_MODE_COMPACT)
+                    } else {
+                        if (data[recipiesPosition].steps != null) {
+                            Html.fromHtml("" + data[recipiesPosition].steps)
+                        } else {
+                            ""
+                        }
+//                    Html.fromHtml("" + data[recipiesPosition].steps)
+                    }
+                }
                 videoUrl = if(data[recipiesPosition].videos != null) {
                     data[recipiesPosition].videos!!
                 } else {
                     ""
                 }
-
+                Picasso.get().load(data!![recipiesPosition]!!.thumbnailImage)
+                    .placeholder(R.drawable.placeholder_image).error(
+                        R.drawable.placeholder_image
+                    ).into(recipiesImg)
 
             }
-//            ingredientContent.typeface = typeface
-//            stepsContent.typeface = typeface
-            /*val uri: Uri = Uri.parse(data[recipiesPosition].videos)
-*/
-            // on below line we are setting
-            // video uri for our video view.
-//            videoView.setVideoURI(uri)
 
-          /*  // on below line we are creating variable
-            // for media controller and initializing it.
-            val mediaController = MediaController(requireContext())
 
-            // on below line we are setting anchor
-            // view for our media controller.
-            mediaController.setAnchorView(videoView)
-
-            // on below line we are setting media player
-            // for our media controller.
-            mediaController.setMediaPlayer(videoView)
-
-            // on below line we are setting media
-            // controller for our video view.
-            videoView.setMediaController(mediaController)*/
 
             // on below line we are
             // simply starting our video view.

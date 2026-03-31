@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.WindowCompat
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.app.delmon.R
@@ -21,7 +22,7 @@ import kotlinx.coroutines.launch
 import org.emvco.threeds.core.ui.UiCustomization
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
     private lateinit var navController: NavController
     private lateinit var binding: ActivityMainBinding
@@ -36,6 +37,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        WindowCompat.setDecorFitsSystemWindows(window, true)
 
         binding.bottomBar
         navController = findNavController(R.id.main_fragment)
@@ -48,7 +50,7 @@ class MainActivity : AppCompatActivity() {
 //        navController.enableOnBackPressed(true)
         navController.addOnDestinationChangedListener { _, destination, _ ->
             Log.d("TAG", "onCreate:${destination.id} $destination ")
-            if (destination.id == R.id.home_fragment || destination.id == R.id.settings_fragment || destination.id == R.id.feedingFragment || destination.id == R.id.receipes_fragment || destination.id == R.id.order_fragment || destination.id == R.id.profile_fragment || destination.id == R.id.favouritesFragment  ){
+            if (destination.id == R.id.home_fragment || destination.id == R.id.feedingFragment || destination.id == R.id.receipes_fragment || destination.id == R.id.order_fragment || destination.id == R.id.profile_fragment){
                 binding.bottomBar.visibility = View.VISIBLE
             }else{
                 binding.bottomBar.visibility = View.GONE
@@ -79,7 +81,32 @@ class MainActivity : AppCompatActivity() {
         val menu = popupMenu.menu
         binding.bottomBar.setupWithNavController(menu, navController)
 
-//        binding.bottomBar.setupWithNavController( navController)
+        binding.bottomBar.onItemSelected = { position ->
+            val destinationId = when (position) {
+                0 -> R.id.home_fragment
+                1 -> R.id.order_fragment
+                2 -> R.id.receipes_fragment
+                3 -> R.id.cart_fragment
+                4 -> R.id.profile_fragment
+                else -> R.id.home_fragment
+            }
+
+            if (destinationId == R.id.profile_fragment) {
+                val navOptions = androidx.navigation.NavOptions.Builder()
+                    .setLaunchSingleTop(true)
+                    .setRestoreState(false)
+                    .setPopUpTo(navController.graph.startDestinationId, false, true)
+                    .build()
+                navController.navigate(destinationId, null, navOptions)
+            } else {
+                val navOptions = androidx.navigation.NavOptions.Builder()
+                    .setLaunchSingleTop(true)
+                    .setRestoreState(true)
+                    .setPopUpTo(navController.graph.startDestinationId, false, true)
+                    .build()
+                navController.navigate(destinationId, null, navOptions)
+            }
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

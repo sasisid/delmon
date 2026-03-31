@@ -11,18 +11,20 @@ import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.Volley
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.mastercard.gateway.android.sdk.GatewayRegion
 import com.mastercard.gateway.android.sdk.GatewaySDK
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.emvco.threeds.core.ui.UiCustomization
+import com.app.delmon.utils.LanguageManager
 
 class AppController : Application() {
 
 
     override fun attachBaseContext(base: Context) {
-        super.attachBaseContext(base)
+        super.attachBaseContext(LanguageManager.onAttach(base))
         instance = this
     }
 
@@ -73,21 +75,20 @@ class AppController : Application() {
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
         mFirebaseAnalytics?.setAnalyticsCollectionEnabled(true)
-        GlobalScope.launch (Dispatchers.Main){
-            var a =  GatewaySDK.initialize(this@AppController,
-                "E15251950",
-                "DELMON POULTRY COMPANY BSC",
-                "https://credimax.gateway.mastercard.com/ma/",
-                GatewayRegion.SAUDI_ARABIA,
-                UiCustomization()
-            )
-            Log.d(TAG, "onCreate:appcontroller "+a)
+        try {
+            GlobalScope.launch (Dispatchers.Main){
+                var a =  GatewaySDK.initialize(this@AppController,
+                    "E15251950",
+                    "DELMON POULTRY COMPANY BSC",
+                    "https://credimax.gateway.mastercard.com/ma/",
+                    GatewayRegion.SAUDI_ARABIA,
+                    UiCustomization()
+                )
+                Log.d(TAG, "onCreate:appcontroller "+a)
 
-        }
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//            createNotificationChannel()
-//            createNotificationChannelCall()
+            }
+        }catch (e: Exception){
+            FirebaseCrashlytics.getInstance().log(e.toString())
         }
     }
 

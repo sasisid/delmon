@@ -63,6 +63,9 @@ class HelpSupportFragment : Fragment() {
                     )
                 }
             }
+            back.setOnClickListener {
+                requireActivity().onBackPressed()
+            }
         }
 
         // Inflate the layout for this fragment

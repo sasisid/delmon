@@ -20,10 +20,8 @@
         <ImageView
             android:id="@+id/imageView3"
             android:layout_width="match_parent"
-            android:layout_height="164dp"
-            android:background="#10707070"
-            android:padding="10dp"
-            android:scaleType="centerInside"
+            android:layout_height="120dp"
+            android:scaleType="fitXY"
             android:src="@drawable/placeholder_image"
             android:textAlignment="viewStart"
             app:layout_constraintStart_toStartOf="parent"

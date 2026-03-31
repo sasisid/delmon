@@ -58,7 +58,7 @@ class PielView : View {
             TypedValue.COMPLEX_UNIT_SP, 10F,
             resources.displayMetrics
         )
-        val font: Typeface = ResourcesCompat.getFont(context, R.font.poppins_semibold)!!
+        val font: Typeface = ResourcesCompat.getFont(context, R.font.cairo_semibold)!!
         mTextPaint!!.typeface = font
         mTextPaint!!.letterSpacing = 0.3.toFloat()
         mRange = RectF(mPadding.toFloat(), mPadding.toFloat(),

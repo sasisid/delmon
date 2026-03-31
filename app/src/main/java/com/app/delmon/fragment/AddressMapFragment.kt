@@ -34,6 +34,7 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.LatLngBounds
 import org.json.JSONObject
 import java.util.*
 
@@ -125,6 +126,13 @@ class AddressMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnCameraIdl
         )
     }
 
+    companion object {
+        val BAHRAIN_BOUNDS = LatLngBounds(
+            LatLng(25.532284, 50.366286), // South West
+            LatLng(26.315582, 50.831777)  // North East
+        )
+    }
+
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
         if (ActivityCompat.checkSelfPermission(
@@ -136,28 +144,42 @@ class AddressMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnCameraIdl
             ) != PackageManager.PERMISSION_GRANTED
         ) {
             requestPermissions()
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             return
         }
         map?.isMyLocationEnabled = true
         map?.setOnCameraIdleListener(this)
+        
+        // Restrict camera to Bahrain
+        map?.setLatLngBoundsForCameraTarget(BAHRAIN_BOUNDS)
+        map?.setMinZoomPreference(10.0f)
+        
         locateMyLocation()
     }
+
     private fun locateMyLocation() {
-
+        if (map == null) return
         Log.d("TAG", "locateMyLocation: ${longitude} $lattitude")
-        lattitude.let { lat ->
-            longitude.let { lng ->
-                map?.animateCamera(CameraUpdateFactory.newLatLngZoom(LatLng(lat, lng), 14.0f))
-                Log.d(TAG, "locateMyLocation: ${lattitude}")
-                getaddress(lattitude,longitude)
-            }
-        }
 
+        // Default to Manama if coordinates are invalid (0.0, 0.0)
+        if (lattitude == 0.0 && longitude == 0.0) {
+            lattitude = 26.2235
+            longitude = 50.5876
+        }
+        
+        val currentLatLng = LatLng(lattitude, longitude)
+        
+        if (BAHRAIN_BOUNDS.contains(currentLatLng)) {
+            map?.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 14.0f))
+            getaddress(lattitude, longitude)
+        } else {
+            // Default to Manama, Bahrain if outside bounds
+            val defaultLat = 26.2235
+            val defaultLng = 50.5876
+            lattitude = defaultLat
+            longitude = defaultLng
+            map?.animateCamera(CameraUpdateFactory.newLatLngZoom(LatLng(defaultLat, defaultLng), 14.0f))
+            getaddress(defaultLat, defaultLng)
+        }
     }
 
     private  fun getaddress(latitude:Double,longitude:Double){
@@ -182,10 +204,11 @@ class AddressMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnCameraIdl
 
 
     override fun onCameraIdle() {
+        if (map == null) return
         Log.d(TAG, "onCameraIdle: ${map?.cameraPosition?.target?.longitude}")
-        getaddress(map?.cameraPosition?.target?.latitude!!,
-            map?.cameraPosition?.target?.longitude!!
-        )
+        map?.cameraPosition?.target?.let {
+            getaddress(it.latitude, it.longitude)
+        }
     }
 
 

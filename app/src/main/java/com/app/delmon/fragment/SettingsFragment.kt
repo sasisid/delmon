@@ -60,6 +60,9 @@ class SettingsFragment : Fragment() {
         }
         
         binding.apply {
+            back.setOnClickListener {
+                findNavController().popBackStack()
+            }
             mainLayout.isClickable = false
             mainLayout.isEnabled = false
 

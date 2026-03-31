@@ -296,7 +296,9 @@
         tools:layout="@layout/fragment_address_map" >
         <action
             android:id="@+id/action_addressMapFragment_to_addressFragment"
-            app:destination="@id/addressFragment" />
+            app:destination="@id/addressFragment"
+            app:popUpTo="@id/addressFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_addressMapFragment_to_searchAddressFragment"
             app:destination="@id/searchAddressFragment"

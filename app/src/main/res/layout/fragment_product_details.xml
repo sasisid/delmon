@@ -473,7 +473,9 @@
             android:id="@+id/amt_rl"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layoutDirection="locale"
+            app:layout_constraintEnd_toEndOf="@+id/textView5"
+            app:layout_constraintStart_toStartOf="@+id/textView5"
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
@@ -481,21 +483,20 @@
                 style="@style/medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textStyle="normal"
                 android:text="150 BD"
-                android:visibility="invisible"
                 android:textColor="@color/secondary_color"
-                android:textSize="15dp" />
+                android:textSize="15dp"
+                android:textStyle="normal"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/amt"
                 style="@style/medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_marginStart="20dp"
-                android:layout_toRightOf="@+id/strike_amt"
-                android:text="BD"
+                android:layout_toEndOf="@id/strike_amt"
+                android:layout_marginStart="8dp"
+                android:text="100 BD"
                 android:textColor="@color/secondary_color"
                 android:textSize="15dp" />
 

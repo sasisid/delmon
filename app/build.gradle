@@ -8,14 +8,14 @@ plugins {
 
 android {
     namespace 'com.app.delmon'
-    compileSdk 34
+    compileSdk 35
 
     defaultConfig {
         applicationId "com.app.delmon"
         minSdk 24
-        targetSdk 34
-        versionCode 13
-        versionName "1.1.2"
+        targetSdk 35
+        versionCode 19
+        versionName "1.1.8"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -27,11 +27,11 @@ android {
 
     buildTypes {
         release {
-            // Code shrink + obfuscation
-            minifyEnabled true
-
-            // Resource shrink (runs after minify)
-            shrinkResources true
+//            // Code shrink + obfuscation
+//            minifyEnabled true
+//
+//            // Resource shrink (runs after minify)
+//            shrinkResources true
 
             // Recommended default rules + your own
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'),
@@ -112,7 +112,7 @@ dependencies {
     //bottombar
     implementation 'com.github.ibrahimsn98:SmoothBottomBar:1.7.9'
     implementation 'com.github.ismaeldivita:chip-navigation-bar:1.4.0'
-    implementation 'com.mastercard.gateway:Mobile_SDK_Android:2.0.10'
+    implementation 'com.mastercard.gateway:Mobile_SDK_Android:2.0.15'
 
 
 //    implementation 'com.github.fevziomurtekin:PayView:1.0.3'

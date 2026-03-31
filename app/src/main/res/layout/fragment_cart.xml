@@ -138,6 +138,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
+                android:textAlignment="viewStart"
                 android:text="@string/your_order_delivered_on"
                 android:textSize="10dp"
                 app:layout_constraintStart_toStartOf="parent"

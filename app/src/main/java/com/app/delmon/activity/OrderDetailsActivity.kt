@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.WindowCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,7 +25,7 @@ import org.json.JSONArray
 import org.json.JSONObject
 
 
-class OrderDetailsActivity : AppCompatActivity() {
+class OrderDetailsActivity : BaseActivity() {
     private lateinit var binding: ActivityOrderDetailsBinding
     private lateinit var homeViewModel: HomeViewModel
     var id = "0"
@@ -32,6 +33,8 @@ class OrderDetailsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityOrderDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        WindowCompat.setDecorFitsSystemWindows(window, true)
+
         homeViewModel = ViewModelProvider(this)[HomeViewModel::class.java]
 
          id  = intent.getStringExtra("key")!!

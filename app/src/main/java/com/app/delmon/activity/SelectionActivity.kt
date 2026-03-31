@@ -24,7 +24,7 @@ import com.app.delmon.utils.LanguageManager
 import com.app.delmon.utils.LottieLoader
 import java.util.*
 
-class SelectionActivity : AppCompatActivity() {
+class SelectionActivity : BaseActivity() {
 
     private lateinit var binding: ActivitySelectionBinding
     private lateinit var sharedHelper: SharedHelper
@@ -33,6 +33,7 @@ class SelectionActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySelectionBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         sharedHelper = SharedHelper(this)
 
         LanguageManager.changeLanguage(this,sharedHelper.language)

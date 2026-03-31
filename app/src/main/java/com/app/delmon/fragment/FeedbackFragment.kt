@@ -69,6 +69,9 @@ class FeedbackFragment : Fragment() {
             val intents = Intent(Intent.ACTION_VIEW, uris)
             startActivity(intents)
         }
+        binding.back.setOnClickListener {
+            requireActivity().onBackPressed()
+        }
         // Inflate the layout for this fragment
         return binding.root
     }

@@ -305,7 +305,7 @@ class AddressFragment : Fragment() {
                 if (from=="cart"){
                     Log.d("TAG", "onClickItem:pickupAddress= ${data[position].toString()}")
                     CartFragment.orderType = "DELIVERY"
-                    CartFragment.deliveryAddress = data[position]!!.area.toString()
+                    CartFragment.deliveryAddress = "${data[position]!!.area?.toString()}  '\' ${data[position]!!.blockNo?.toString()}  '\' ${data[position]!!.houseNo?.toString()} '\' ${data[position]!!.roadNo?.toString()} '\' ${data[position]!!.pin?.toString()} "
                     CartFragment.deliveryCharge = data[position]!!.deliveryCharge
                     val jsonString = Gson().toJson(data[position]!!)
 

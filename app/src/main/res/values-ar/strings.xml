@@ -30,12 +30,13 @@
     <string name="exit_press_back_twice_message">اضغط مره أخرى للرجوع</string>
     <string name="what_are_you_looking">عن ماذا تبحث؟</string>
     <string name="Select_desc"></string>
-    <string name="poultry">دواجن</string>
-    <string name="feeding">تغذية</string>
+    <string name="poultry">دجاج المزرعة</string>
+    <string name="feeding">أعلاف دلمون</string>
     <string name="getin">ابقى على تواصل</string>
     <string name="search_text">عن ماذا تريد ان تبحث</string>
     <string name="select_your_category">إختر فئتك</string>
     <string name="title">الموضوع</string>
+    <string name="categories">فئات</string>
     <string name="product_list">قائمة المنتجات</string>
     <string name="instock">متوفر</string>
     <string name="dummy_amt">45BD</string>
@@ -123,7 +124,7 @@
     <string name="steps">الخطوات</string>
     <string name="total_amount">المبلغ الإجمالي</string>
     <string name="book">احجز</string>
-    <string name="cart">السلة</string>
+    <string name="cart">سلتي</string>
     <string name="write_note">اكتب ملاحظة</string>
     <string name="delivery_address">عنوان التوصيل</string>
     <string name="save_as">حفظ باسم</string>

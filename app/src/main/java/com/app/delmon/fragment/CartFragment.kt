@@ -30,6 +30,7 @@ import com.app.delmon.interfaces.DialogCallBack
 import com.app.delmon.interfaces.OnClickListener
 import com.app.delmon.interfaces.OnClickListnereWithType
 import com.app.delmon.interfaces.SingleTapListener
+import com.app.delmon.utils.BaseUtils
 import com.app.delmon.utils.Constants
 import com.app.delmon.utils.DialogUtils
 import com.app.delmon.utils.UiUtils
@@ -691,13 +692,14 @@ class CartFragment : Fragment() {
                                     resources.getString(R.string.delivery_date)
                             }
 
-                            val cal = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
-                            cal.add(Calendar.DATE, min)
-                            val today = cal.timeInMillis
+//                            val cal = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
+//                            cal.add(Calendar.DATE, min)
+//                            val today = cal.timeInMillis
+
                             val dateFormatter = SimpleDateFormat("EEEE, MMM dd, yyyy", Locale.ENGLISH)
-                            var date = dateFormatter.format(Date(today)).toString()
+                            var date = BaseUtils.getFormatedDateUtc(it.adminDate,"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'","EEEE, MMM d, yyyy")
                             Log.d("TAG", "onCreateView:10 min= $min max= $max $date")
-                            deliveryDate = date
+                            deliveryDate = date.toString()
                             binding.delveryDate.text = deliveryDate.toString()
                             binding.deliveryDateText.text = deliveryDate.toString()
                             Log.e("appSample", "Value: ${it.cartonDiscount.toString()}")
