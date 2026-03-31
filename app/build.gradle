@@ -104,6 +104,7 @@ dependencies {
     //CircleIndicator
     implementation 'me.relex:circleindicator:2.1.6'
     implementation 'com.google.android.gms:play-services-maps:18.1.0'
+    implementation 'com.google.android.gms:play-services-location:21.3.0'
 
     //bottombar
     implementation 'com.github.ibrahimsn98:SmoothBottomBar:1.7.9'

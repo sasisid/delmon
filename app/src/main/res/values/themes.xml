@@ -19,19 +19,14 @@
         <!-- Status bar color. -->
         <!--        <item name="android:statusBarColor" tools:ignore="DuplicateDefinition">?attr/colorPrimaryVariant</item>-->
         <!-- Customize your theme here. -->
-        <item name="android:navigationBarColor">
-            @android:color/transparent
-        </item>
+        <item name="android:navigationBarColor">@color/white</item>
 
-        <!-- Optional: set to transparent if your app is drawing behind the status bar. -->
-        <item name="android:statusBarColor">
-            @android:color/transparent
-        </item>
-
-        <!-- Optional: set the status bar light and content dark. -->
-        <item name="android:windowLightStatusBar">
-            true
-        </item>
+        <!-- Opaque bars so content does not draw under status / navigation (avoids overlap on API 35+). -->
+        <item name="android:statusBarColor">@color/secondary_color</item>
+        <!-- White icons on red status bar -->
+        <item name="android:windowLightStatusBar">false</item>
+        <!-- Dark nav buttons on white bar -->
+        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">true</item>
     </style>
 
     <style name="Theme.lightStatusbar" parent="Theme.Delmon">

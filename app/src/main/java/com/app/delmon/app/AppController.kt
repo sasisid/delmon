@@ -79,6 +79,9 @@ class AppController : Application() {
     override fun onCreate() {
         super.onCreate()
 
+        // Create channel before any FCM message (incl. system-displayed notification payload in background).
+        NotifyChannels.ensure(this)
+
         val sharedHelper = SharedHelper(this)
         sharedHelper.ensureDefaultLanguagePersisted()
         // Keeps UI locale aligned with persisted choice after cold start (incl. Android 13+ per-app language).

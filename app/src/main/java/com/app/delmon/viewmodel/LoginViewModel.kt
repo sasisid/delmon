@@ -172,6 +172,42 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
         return commonResponseModel
     }
 
+    /**
+     * Updates notification preferences via the same `update` endpoint as profile.
+     * Only non-null fields are sent (unchanged toggles are omitted).
+     */
+    fun updateUserNotificationPreferences(
+        context: Context,
+        isMobileNotification: Boolean?,
+        isEmailNotification: Boolean?,
+    ): LiveData<UserResponse> {
+        val jsonObject = JSONObject()
+        isMobileNotification?.let { jsonObject.put("isMobileNotification", it) }
+        isEmailNotification?.let { jsonObject.put("isEmailNotification", it) }
+        val token = sharedHelper?.fcmToken.orEmpty()
+        if (token.isNotEmpty()) {
+            jsonObject.put("deviceToken", token)
+        }
+        val commonResponseModel: MutableLiveData<UserResponse> = MutableLiveData()
+        Api.postMethod(getApiParams(
+            context,
+            jsonObject,
+            UrlHelper.UPDATEUSER
+        ), object : ApiResponseCallback {
+            override fun setResponseSuccess(jsonObject: JSONObject) {
+                Log.d("TAG", "setResponseSuccess: $jsonObject")
+                commonResponseModel.postFromJson(jsonObject, UserResponse::class.java) { err ->
+                    UserResponse().apply { error = true; message = err }
+                }
+            }
+
+            override fun setErrorResponse(error: String) {
+                commonResponseModel.value = UserResponse().apply { this.error = true; message = error }
+            }
+        })
+        return commonResponseModel
+    }
+
     fun getUser(
         context: Context,
     ): LiveData<UserResponse> {

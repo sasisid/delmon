@@ -50,6 +50,11 @@ class SharedPref(private val context: Context) {
         return sharedPreferences!!.getBoolean(Key, false)
     }
 
+    fun getBoolean(Key: String, defaultValue: Boolean): Boolean {
+        sharedPreferences = context.getSharedPreferences(Cache, Context.MODE_PRIVATE)
+        return sharedPreferences!!.getBoolean(Key, defaultValue)
+    }
+
     fun putInt(key: String, value: Int) {
         sharedPreferences = context.getSharedPreferences(Cache, Context.MODE_PRIVATE)
         editor = sharedPreferences!!.edit()

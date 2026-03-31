@@ -413,6 +413,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <Switch
+                        android:id="@+id/switch_mobile_notification"
                         android:layout_width="55dp"
                         android:layout_height="39dp"
                         android:layout_marginEnd="30dp"
@@ -461,6 +462,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <Switch
+                        android:id="@+id/switch_email_notification"
                         android:layout_width="55dp"
                         android:layout_height="39dp"
                         android:layout_marginEnd="30dp"

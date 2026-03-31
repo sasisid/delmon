@@ -10,7 +10,6 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.app.delmon.R
 import com.app.delmon.Session.SharedHelper
-import com.app.delmon.activity.MainActivity
 import com.app.delmon.activity.SplashScreenActivity
 import com.app.delmon.app.AppController
 import com.google.firebase.messaging.FirebaseMessagingService
@@ -48,7 +47,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         )
 
         val notif = NotificationCompat.Builder(this, AppController.NotifyChannels.GENERAL)
-            .setSmallIcon(R.drawable.delmon_short_logo)
+            .setSmallIcon(R.drawable.ic_launcher_foreground)
             .setContentTitle(title)
             .setContentText(body)
             .setStyle(NotificationCompat.BigTextStyle().bigText(body))

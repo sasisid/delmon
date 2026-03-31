@@ -33,6 +33,8 @@ import com.app.delmon.utils.UiUtils
 import com.app.delmon.viewmodel.AddressViewModel
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.Priority
+import com.google.android.gms.tasks.CancellationTokenSource
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
@@ -76,12 +78,6 @@ class AddressMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnCameraIdl
         val mapFragment = childFragmentManager.findFragmentById(R.id.google_map) as SupportMapFragment?
         mapFragment!!.getMapAsync(this)
         binding.changeLayout.visibility = View.VISIBLE
-
-        if (from=="search"){
-            locateMyLocation()
-        }else{
-            getLocation()
-        }
 
         binding.confirm.setOnClickListener {
 /*
@@ -128,6 +124,8 @@ class AddressMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnCameraIdl
     }
 
     companion object {
+        private const val REQUEST_LOCATION = 111
+
         val BAHRAIN_BOUNDS = LatLngBounds(
             LatLng(25.532284, 50.366286), // South West
             LatLng(26.315582, 50.831777)  // North East
@@ -136,25 +134,35 @@ class AddressMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnCameraIdl
 
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
-        if (ActivityCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            requestPermissions()
-            return
-        }
-        map?.isMyLocationEnabled = true
-        map?.setOnCameraIdleListener(this)
-        
-        // Restrict camera to Bahrain
         map?.setLatLngBoundsForCameraTarget(BAHRAIN_BOUNDS)
         map?.setMinZoomPreference(10.0f)
-        
-        locateMyLocation()
+        map?.setOnCameraIdleListener(this)
+
+        // Picked place from search: keep bundle lat/lng; do not replace with device location.
+        if (from == "search") {
+            if (checkPermissions()) {
+                try {
+                    map?.isMyLocationEnabled = true
+                } catch (e: SecurityException) {
+                    Log.e(TAG, "onMapReady: my location", e)
+                }
+            }
+            locateMyLocation()
+            return
+        }
+
+        if (checkPermissions()) {
+            try {
+                map?.isMyLocationEnabled = true
+            } catch (e: SecurityException) {
+                Log.e(TAG, "onMapReady: my location", e)
+            }
+            getLocation()
+        } else {
+            requestPermissions()
+            // Without this, the map stays at the default (0,0) until the user leaves and returns.
+            locateMyLocation()
+        }
     }
 
     private fun locateMyLocation() {
@@ -185,18 +193,25 @@ class AddressMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnCameraIdl
 
     private fun appLocale(): Locale = Locale(SharedHelper(requireContext()).language)
 
-    private  fun getaddress(latitude:Double,longitude:Double){
+    @SuppressLint("SetTextI18n")
+    private fun getaddress(latitude: Double, longitude: Double) {
         val geocoder = Geocoder(requireContext(), appLocale())
-        val list: List<Address> = geocoder.getFromLocation(latitude, longitude, 1)!!
+        val list: List<Address> = try {
+            geocoder.getFromLocation(latitude, longitude, 1) ?: emptyList()
+        } catch (e: Exception) {
+            Log.e(TAG, "getaddress", e)
+            emptyList()
+        }
         Log.d("TAG", "getaddress: $list")
         binding.apply {
-            if (!list.isNullOrEmpty()){
-                address.text = list[0].getAddressLine(0)
-                city.text = list[0].locality
-                cityy = list[0].locality
-                addresss = list[0].getAddressLine(0).toString()
+            if (list.isNotEmpty()) {
+                val a = list[0]
+                address.text = a.getAddressLine(0) ?: ""
+                val locality = a.locality ?: a.subAdminArea ?: a.adminArea ?: ""
+                city.text = locality
+                cityy = locality
+                addresss = (a.getAddressLine(0) ?: "").toString()
             }
-
         }
     }
 
@@ -230,56 +245,72 @@ class AddressMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnCameraIdl
         return false
     }
     private fun requestPermissions() {
-        ActivityCompat.requestPermissions(
-            requireActivity(),
+        // Must use Fragment.requestPermissions so onRequestPermissionsResult runs on this fragment.
+        requestPermissions(
             arrayOf(
                 Manifest.permission.ACCESS_COARSE_LOCATION,
-                Manifest.permission.ACCESS_FINE_LOCATION
+                Manifest.permission.ACCESS_FINE_LOCATION,
             ),
-            111
+            REQUEST_LOCATION,
         )
     }
-    @SuppressLint("MissingSuperCall")
+
     override fun onRequestPermissionsResult(
         requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
+        permissions: Array<out String>,
+        grantResults: IntArray,
     ) {
-        if (requestCode == 111) {
-            if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                getLocation()
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode != REQUEST_LOCATION) return
+        if (!checkPermissions()) return
+        map?.let { m ->
+            try {
+                m.isMyLocationEnabled = true
+            } catch (e: SecurityException) {
+                Log.e(TAG, "onRequestPermissionsResult", e)
             }
         }
+        getLocation()
     }
-    @SuppressLint("MissingPermission", "SetTextI18n")
+    @SuppressLint("MissingPermission")
     private fun getLocation() {
-        if (checkPermissions()) {
-            if (isLocationEnabled()) {
-                mFusedLocationClient.lastLocation.addOnCompleteListener(requireActivity()) { task ->
-                    val location: Location? = task.result
-                    if (location != null) {
-                        val geocoder = Geocoder(requireContext(), appLocale())
-                        lattitude= location.latitude
-                        longitude= location.longitude
-                        locateMyLocation()
-                 /*       mainBinding.apply {
-                            tvLatitude.text = "Latitude\n${list[0].latitude}"
-                            tvLongitude.text = "Longitude\n${list[0].longitude}"
-                            tvCountryName.text = "Country Name\n${list[0].countryName}"
-                            tvLocality.text = "Locality\n${list[0].locality}"
-                            tvAddress.text = "Address\n${list[0].getAddressLine(0)}"
-                        }*/
-                    }
-                }
-            } else {
-                UiUtils.showToast(requireContext(),"Please turn on location",false)
-//                Toast.makeText(this, "Please turn on location", Toast.LENGTH_LONG).show()
-                val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
-                startActivity(intent)
-            }
-        } else {
+        if (!checkPermissions()) {
             requestPermissions()
+            locateMyLocation()
+            return
+        }
+        if (!isLocationEnabled()) {
+            UiUtils.showToast(requireContext(), "Please turn on location", false)
+            startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
+            locateMyLocation()
+            return
+        }
+        mFusedLocationClient.lastLocation.addOnCompleteListener(requireActivity()) { task ->
+            val location: Location? = if (task.isSuccessful) task.result else null
+            if (location != null) {
+                lattitude = location.latitude
+                longitude = location.longitude
+                locateMyLocation()
+            } else {
+                // first launch / cold GPS: lastLocation is often null
+                requestFreshCurrentLocation()
+            }
         }
     }
 
+    @SuppressLint("MissingPermission")
+    private fun requestFreshCurrentLocation() {
+        val cts = CancellationTokenSource()
+        mFusedLocationClient.getCurrentLocation(
+            Priority.PRIORITY_HIGH_ACCURACY,
+            cts.token,
+        ).addOnCompleteListener(requireActivity()) { task ->
+            val loc = if (task.isSuccessful) task.result else null
+            if (loc != null) {
+                lattitude = loc.latitude
+                longitude = loc.longitude
+            }
+            locateMyLocation()
+        }
+    }
 }

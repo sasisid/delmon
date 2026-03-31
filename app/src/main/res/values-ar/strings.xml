@@ -103,6 +103,7 @@
     <string name="tittle">الموضوع</string>
     <string name="about_content">حول المحتوى </string>
     <string name="email_notification">اشعارات البريد</string>
+    <string name="login_to_continue">يرجى تسجيل الدخول للمتابعة.</string>
     <string name="edit_profile">تعديل الملف</string>
     <string name="email">البريد الاكتروني</string>
     <string name="save_changes">حفظ التغييرات</string>

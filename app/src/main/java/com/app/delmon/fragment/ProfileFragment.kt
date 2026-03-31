@@ -137,6 +137,12 @@ class ProfileFragment : Fragment() {
                                 Constants.User.Wallet = data?.walletAmount.toString()!!
                                 Constants.User.loyalty = data?.loyaltyPoint.toString()!!
 //                                Constants.User.uname = data?.userName!!
+                                data?.isMobileNotification?.let {
+                                    sharedHelper.isMobileNotificationEnabled = it
+                                }
+                                data?.isEmailNotification?.let {
+                                    sharedHelper.isEmailNotificationEnabled = it
+                                }
                                 if (data?.userType.equals("EMPLOYEE") || data?.userType.equals("MERCHANT")){
                                     binding.walletCard.visibility = View.GONE
                                     binding.loyaltyCard.visibility = View.GONE

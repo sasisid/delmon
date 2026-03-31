@@ -72,6 +72,8 @@
             android:id="@+id/otp1"
             android:layout_width="80dp"
             android:layout_height="80dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:inputType="number"
             android:textAlignment="center"
             android:maxLength="1"

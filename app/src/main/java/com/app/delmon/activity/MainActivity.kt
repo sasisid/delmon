@@ -33,6 +33,7 @@ class MainActivity : BaseActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         WindowCompat.setDecorFitsSystemWindows(window, true)
+        applyMainSystemBarAppearance()
 
         binding.bottomBar
         navController = findNavController(R.id.main_fragment)
@@ -50,7 +51,8 @@ class MainActivity : BaseActivity() {
             }else{
                 binding.bottomBar.visibility = View.GONE
             }
-             theme.applyStyle(R.style.Theme_Delmon, false)
+            theme.applyStyle(R.style.Theme_Delmon, false)
+            applyMainSystemBarAppearance()
 
 //            WindowCompat.setDecorFitsSystemWindows(window, false)
 //            if (destination.id == R.id.type_of_account_fragment){
@@ -64,6 +66,14 @@ class MainActivity : BaseActivity() {
 
 
         setupSmoothBottomMenu()
+    }
+
+    /** Keeps status / nav icon contrast correct after theme re-apply on navigation. */
+    private fun applyMainSystemBarAppearance() {
+        WindowCompat.getInsetsController(window, window.decorView).apply {
+            isAppearanceLightStatusBars = false
+            isAppearanceLightNavigationBars = true
+        }
     }
 
     private fun showToast(msg: String) {

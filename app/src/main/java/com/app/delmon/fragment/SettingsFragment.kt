@@ -13,14 +13,17 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat.recreate
 import androidx.core.os.LocaleListCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.app.delmon.R
 import com.app.delmon.Session.SharedHelper
 import com.app.delmon.activity.MainActivity
 import com.app.delmon.databinding.FragmentSettingsBinding
 import com.app.delmon.utils.Constants
+import com.app.delmon.utils.DialogUtils
 import com.app.delmon.utils.LanguageManager
 import com.app.delmon.utils.UiUtils
+import com.app.delmon.viewmodel.LoginViewModel
 import java.util.*
 
 
@@ -37,6 +40,7 @@ class SettingsFragment : Fragment() {
 
     private lateinit var binding: FragmentSettingsBinding
     private lateinit var sharedHelper: SharedHelper
+    private lateinit var loginViewModel: LoginViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +54,8 @@ class SettingsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentSettingsBinding.inflate(inflater, container, false)
-        sharedHelper= SharedHelper(requireContext())
+        sharedHelper = SharedHelper(requireContext())
+        loginViewModel = ViewModelProvider(this)[LoginViewModel::class.java]
         MainActivity.languageSelected = sharedHelper.language
 
         if(sharedHelper.language == LanguageManager.DEFAULT_LANGUAGE) {
@@ -71,6 +76,8 @@ class SettingsFragment : Fragment() {
             mainLayout.isEnabled = false
 
             notification.setOnClickListener {
+                switchMobileNotification.isChecked = sharedHelper.isMobileNotificationEnabled
+                switchEmailNotification.isChecked = sharedHelper.isEmailNotificationEnabled
                 notificationFrame.visibility = View.VISIBLE
                 languageFrame.visibility = View.GONE
             }
@@ -81,7 +88,46 @@ class SettingsFragment : Fragment() {
 //                setLocale(sharedHelper.language)
             }
             notifyProceedBtn.setOnClickListener {
-                notificationFrame.visibility = View.GONE
+                if (!Constants.User.isLoggedIn) {
+                    UiUtils.showToast(
+                        requireContext(),
+                        requireContext().getString(R.string.login_to_continue),
+                        false
+                    )
+                    return@setOnClickListener
+                }
+                val mobileOn = switchMobileNotification.isChecked
+                val emailOn = switchEmailNotification.isChecked
+                val mobileParam =
+                    if (mobileOn != sharedHelper.isMobileNotificationEnabled) mobileOn else null
+                val emailParam =
+                    if (emailOn != sharedHelper.isEmailNotificationEnabled) emailOn else null
+                if (mobileParam == null && emailParam == null) {
+                    notificationFrame.visibility = View.GONE
+                    return@setOnClickListener
+                }
+                DialogUtils.showLoader(requireContext())
+                loginViewModel.updateUserNotificationPreferences(
+                    requireContext(),
+                    mobileParam,
+                    emailParam
+                ).observe(viewLifecycleOwner) { resp ->
+                    DialogUtils.dismissLoader()
+                    val r = resp ?: return@observe
+                    if (r.error == true) {
+                        r.message?.let { UiUtils.showSnack(binding.root, it) }
+                    } else {
+                        sharedHelper.isMobileNotificationEnabled = mobileOn
+                        sharedHelper.isEmailNotificationEnabled = emailOn
+                        r.data?.isMobileNotification?.let {
+                            sharedHelper.isMobileNotificationEnabled = it
+                        }
+                        r.data?.isEmailNotification?.let {
+                            sharedHelper.isEmailNotificationEnabled = it
+                        }
+                        notificationFrame.visibility = View.GONE
+                    }
+                }
             }
             language.setOnClickListener {
                 notificationFrame.visibility = View.GONE

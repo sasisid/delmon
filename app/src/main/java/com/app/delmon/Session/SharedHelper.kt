@@ -37,7 +37,7 @@ class SharedHelper(context: Context) {
             return sharedPreference.getKey("fcmToken")
         }
         set(value) {
-            sharedPreference.putKey("fcmToken", value)
+            sharedPreference.putKeyCommit("fcmToken", value)
         }
 
     var imageUploadPath: String
@@ -666,6 +666,20 @@ class SharedHelper(context: Context) {
         }
         set(value) {
             sharedPreference.putBoolean("isGrid", value)
+        }
+
+    /** Push / mobile notification preference (synced with update user API `isMobileNotification`). */
+    var isMobileNotificationEnabled: Boolean
+        get() = sharedPreference.getBoolean("isMobileNotification", true)
+        set(value) {
+            sharedPreference.putBoolean("isMobileNotification", value)
+        }
+
+    /** Email notification preference (synced with update user API `isEmailNotification`). */
+    var isEmailNotificationEnabled: Boolean
+        get() = sharedPreference.getBoolean("isEmailNotification", true)
+        set(value) {
+            sharedPreference.putBoolean("isEmailNotification", value)
         }
 
 

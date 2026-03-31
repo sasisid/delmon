@@ -104,6 +104,7 @@
     <string name="tittle">Title</string>
     <string name="about_content"></string>
     <string name="email_notification">Email Notification</string>
+    <string name="login_to_continue">Please log in to continue.</string>
     <string name="edit_profile">EditProfile</string>
     <string name="email">Email</string>
     <string name="save_changes">Save Changes</string>
