@@ -68,8 +68,8 @@ class OrderDetailsActivity : BaseActivity() {
 //                            JSONObject(java.lang.String.valueOf(it.data!![0].deliveryAddress.getJSONObject()))
 
                         binding.address.text = it.data!![0].deliveryAddress?.area ?: "" +"  "+it.data!![0].deliveryAddress?.address ?: ""
-
-                        binding.deliveryLable.text = "Delivery Address"
+                        val text = this.getString(R.string.delivery_address)
+                        binding.deliveryLable.text = text
                     }
 
                     if(it.data!![0].paymentTypeId == "CASH"){

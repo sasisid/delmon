@@ -3,9 +3,11 @@ package com.app.delmon.adapter
 
 import android.content.Context
 import android.graphics.Color
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.app.delmon.Model.CategoryResponse
 import com.app.delmon.R
@@ -58,16 +60,21 @@ class CategoryAdapter(
             notifyDataSetChanged()
 
         }
-        if(row_index==position){
-            //  taskFragment._binding!!.categoryRecyc.smoothScrollToPosition(position)
-            holder.binding.catName.setTextColor(Color.parseColor("#E31D1A"));
-            holder.binding.catName.setBackgroundResource(R.drawable.rectangle_secondary_border_radius)
-        }
-        else
-        {
-            holder.binding.catName.setTextColor(Color.parseColor("#000000"));
-            holder.binding.catName.setBackgroundResource(R.drawable.grey_rectangle)
-
+        val strokePx = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP,
+            1.5f,
+            context.resources.displayMetrics,
+        ).toInt().coerceAtLeast(1)
+        if (row_index == position) {
+            holder.binding.tabCard.strokeWidth = strokePx
+            holder.binding.tabCard.strokeColor = ContextCompat.getColor(context, R.color.secondary_color)
+            holder.binding.tabCard.setCardBackgroundColor(ContextCompat.getColor(context, R.color.white))
+            holder.binding.catName.setTextColor(ContextCompat.getColor(context, R.color.secondary_color))
+        } else {
+            holder.binding.tabCard.strokeWidth = 0
+            holder.binding.tabCard.strokeColor = Color.TRANSPARENT
+            holder.binding.tabCard.setCardBackgroundColor(ContextCompat.getColor(context, R.color.btn_grey))
+            holder.binding.catName.setTextColor(ContextCompat.getColor(context, R.color.black))
         }
 
 

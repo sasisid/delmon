@@ -11,8 +11,12 @@ import com.app.delmon.Model.CartResponseNew
 import com.app.delmon.Model.OrderListResponse
 import com.app.delmon.Model.ProductResponse
 import com.app.delmon.R
+import com.app.delmon.Session.SharedHelper
 import com.app.delmon.fragment.CartFragment
 import com.app.delmon.interfaces.OnClickListnereWithType
+
+private lateinit var sharedHelper: SharedHelper
+
 
 class CartAdapter(
     var type:Int,
@@ -27,6 +31,7 @@ class CartAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryParentViewHolder {
+        sharedHelper= SharedHelper(context)
         return CategoryParentViewHolder(
             LayoutInflater.from(context).inflate(
                 R.layout.cart_product_layout,
@@ -86,11 +91,17 @@ class CartAdapter(
             holder.binding.line.visibility = View.INVISIBLE
             holder.binding.constraintLayout5.visibility = View.GONE
             holder.binding.apply {
+                val vatText = context.getString(R.string.vat)
+                if (sharedHelper.language == "ar") {
+                    title.text = productData[position].enProductName
+                } else {
+                    title.text = productData[position].arProductName
+                }
                 title.text = productData[position].enProductName
                 weight.text = productData[position].weight
                 amt.text = "${productData[position]!!.price!!} BD"
                 if (productData[position].vat != null){
-                    productVat.text = "VAT: "+productData[position]!!.vat.toString()+ "%"
+                    productVat.text = "$vatText: "+ productData[position].vat.toString()+ "%"
                 }
                 else{
                     productVat.visibility= View.GONE

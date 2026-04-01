@@ -47,21 +47,39 @@ class HomeCategoryAdapter(
     override fun onBindViewHolder(holder: MyBookingViewHolder, position: Int) {
         Log.d("TAG", "onBindViewHolder: ${data!![position]!!}")
         holder.binding.apply {
-            if (data!![position]!!.colorCode!="" && data!![position]!!.colorCode!!.length >= 7) {
-                catLay.setBackgroundColor(Color.parseColor(data!![position]!!.colorCode))
+            val item = data!![position]!!
+            val bgColor = try {
+                if (!item.colorCode.isNullOrEmpty() && item.colorCode!!.length >= 7) {
+                    Color.parseColor(item.colorCode)
+                } else {
+                    Color.parseColor(colors[position % colors.size])
+                }
+            } catch (_: IllegalArgumentException) {
+                Color.parseColor(colors[position % colors.size])
             }
-            catNum.text = "0${position+1}"
-            catTitle.text = data!![position]!!.name
+            catLay.setBackgroundColor(bgColor)
+            applyContrastText(holder, bgColor)
+            catNum.text = "0${position + 1}"
+            catTitle.text = item.name
             root.setOnClickListener {
                 onClickListener.onClickItem(position)
             }
-//            if (MainActivity.apptype==2){
-                Glide.with(context).load(data!![position]!!.image).into(holder.binding.catImg);
-//            }
-            }
-
-
+            Glide.with(context).load(item.image).into(catImg)
         }
+    }
+
+    /** White/light text on dark category tiles; dark text on light pastels. */
+    private fun applyContrastText(holder: MyBookingViewHolder, backgroundColor: Int) {
+        val r = Color.red(backgroundColor)
+        val g = Color.green(backgroundColor)
+        val b = Color.blue(backgroundColor)
+        val luminance = (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255.0
+        val darkBg = luminance < 0.58
+        val title = if (darkBg) Color.WHITE else Color.parseColor("#1A1A1A")
+        val sub = if (darkBg) Color.argb(210, 255, 255, 255) else Color.argb(175, 26, 26, 26)
+        holder.binding.catTitle.setTextColor(title)
+        holder.binding.catNum.setTextColor(sub)
+    }
 
     override fun getItemCount(): Int {
 

@@ -12,18 +12,16 @@
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_above="@id/bottom_navigation"
         android:clipToPadding="false"
         android:overScrollMode="never"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation" />
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
-        android:layout_height="170dp"
-        android:layout_alignParentBottom="true"
+        android:layout_height="180dp"
         android:background="@color/white"
-        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -37,67 +35,72 @@
             android:visibility="visible"
             app:ci_drawable_unselected="@drawable/unselected_indicator"
             app:ci_drawable="@drawable/selected_inddicator"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
 
         <TextView
             android:id="@+id/btn_previous_step"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="30dp"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="30dp"
             android:background="@drawable/rectangle_secondary_border_radius"
-            android:paddingHorizontal="50dp"
-            android:paddingVertical="20dp"
+            android:gravity="center"
             android:text="@string/back"
             android:visibility="gone"
             android:textAllCaps="true"
             android:textColor="@color/secondary_color"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btn_next_step"
+            app:layout_constraintHorizontal_weight="1"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/btn_next_step" />
+            app:layout_constraintTop_toBottomOf="@+id/pageIndicatorView"
+            app:layout_constraintVertical_bias="1.0" />
+
         <TextView
             android:id="@+id/btn_skip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="30dp"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="30dp"
             android:background="@drawable/rectangle_secondary_border_radius"
-            android:paddingHorizontal="50dp"
-            android:paddingVertical="20dp"
+            android:gravity="center"
             android:text="@string/skip"
-
             android:textAllCaps="true"
             android:textColor="@color/secondary_color"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btn_next_step"
+            app:layout_constraintHorizontal_weight="1"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/btn_next_step" />
+            app:layout_constraintTop_toBottomOf="@+id/pageIndicatorView"
+            app:layout_constraintVertical_bias="1.0" />
 
         <TextView
             android:id="@+id/btn_next_step"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="30dp"
-            android:layout_toEndOf="@+id/btn_previous_step"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="30dp"
             android:background="@drawable/rectangle_border"
             android:backgroundTint="@color/secondary_color"
-            android:paddingHorizontal="50dp"
-            android:paddingVertical="20dp"
+            android:gravity="center"
             android:text="@string/next"
             android:textAllCaps="true"
             android:textColor="@color/white"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="1"
             app:layout_constraintStart_toEndOf="@+id/btn_skip"
-            app:layout_constraintTop_toBottomOf="@+id/pageIndicatorView" />
+            app:layout_constraintTop_toBottomOf="@+id/pageIndicatorView"
+            app:layout_constraintVertical_bias="1.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
