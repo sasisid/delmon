@@ -101,7 +101,7 @@ class CartFragment : Fragment() {
 
         var empCartonDiscount = 0
         var employeeCartonDiscount = 0
-        lateinit var holidays: ArrayList<String>
+        var holidays: ArrayList<String> = ArrayList()
 
     }
 
@@ -274,6 +274,11 @@ class CartFragment : Fragment() {
                 if (data.isNullOrEmpty()) {
                     UiUtils.showSnack(binding.root, requireContext().resources.getString(R.string.coupon_already_used))
                 } else {
+                    val couponRow = data.firstOrNull()
+                    if (couponRow == null) {
+                        UiUtils.showSnack(binding.root, requireContext().resources.getString(R.string.coupon_already_used))
+                        return@setOnClickListener
+                    }
 
                     if(isCouponApply == 1) {
                         isCouponApply = 0
@@ -300,13 +305,13 @@ class CartFragment : Fragment() {
 //                        binding.coupon.isEnabled = false
 //                        binding.coupon.isClickable = false
 
-                        if (grandTotal <= data[0].maximumDiscount!!.toDouble()) {
+                        if (grandTotal <= couponRow.maximumDiscount!!.toDouble()) {
                             couponAmount = grandTotal
                         } else {
-                            couponAmount = data[0].maximumDiscount!!.toDouble()
+                            couponAmount = couponRow.maximumDiscount!!.toDouble()
                         }
 
-                        couponId = data[0].id.toString()
+                        couponId = couponRow.id.toString()
                         loadCalc()
                     }
 
@@ -730,7 +735,7 @@ class CartFragment : Fragment() {
                             isSelfPickup = it.isSelfPickup
                             isDelivery = it.isDelivery
                             defaultCartonDiscount = it.defaultCartonDiscount
-                            holidays = ArrayList(it.holidayList)
+                            holidays = ArrayList(it.holidayList ?: emptyList())
 
                             Log.e("appSample", "defaultMaxCartonDiscountPerDayUser: ${defaultMaxCartonDiscountPerDayUser.toString()}")
                             Log.e("appSample", "defaultMaxCartonDiscountPerDayEmployee: ${defaultMaxCartonDiscountPerDayEmployee.toString()}")

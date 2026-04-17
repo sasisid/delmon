@@ -34,6 +34,20 @@
         <action
             android:id="@+id/action_cartFragment_to_profileFragment"
             app:destination="@id/profile_fragment" />
+        <action
+            android:id="@+id/action_cart_fragment_to_addressFragment"
+            app:destination="@id/addressFragment" />
+        <action
+            android:id="@+id/action_cart_fragment_to_login_fragment"
+            app:destination="@id/login_fragment"
+            app:popUpTo="@id/feedingFragment"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_cart_fragment_to_home_fragment"
+            app:destination="@id/feedingFragment" />
+        <action
+            android:id="@+id/action_cart_fragment_to_payment_fragment"
+            app:destination="@id/paymentFragment" />
     </fragment>
     <fragment
         android:id="@+id/profile_fragment"
@@ -88,12 +102,27 @@
         <action
             android:id="@+id/action_categoryFragment_to_productDetailFragment"
             app:destination="@id/product_details_fragment" />
+        <action
+            android:id="@+id/action_category_fragment_to_cart_fragment"
+            app:destination="@id/cart_fragment" />
+        <action
+            android:id="@+id/action_category_fragment_to_login_fragment"
+            app:destination="@id/login_fragment" />
     </fragment>
     <fragment
         android:id="@+id/product_details_fragment"
         android:name="com.app.delmon.fragment.ProductDetailsFragment"
         android:label="product_details"
         tools:layout="@layout/fragment_product_details" >
+        <action
+            android:id="@+id/action_product_details_fragment_to_login_fragment"
+            app:destination="@id/login_fragment" />
+        <action
+            android:id="@+id/action_product_details_fragment_to_recipiesDetailsFragment"
+            app:destination="@id/recipiesDetailsFragment" />
+        <action
+            android:id="@+id/action_product_details_fragment_to_cart_fragment"
+            app:destination="@id/cart_fragment" />
     </fragment>
     <fragment
         android:id="@+id/type_of_account_fragment"
@@ -129,7 +158,7 @@
             app:destination="@id/profile_fragment" />
         <action
             android:id="@+id/action_otp_fragment_to_home_fragment"
-            app:destination="@id/home_fragment" />
+            app:destination="@id/feedingFragment" />
     </fragment>
     <fragment
         android:id="@+id/feedback_fragment"
@@ -188,6 +217,9 @@
         <action
             android:id="@+id/action_addressFragment_to_searchAddressFragment"
             app:destination="@id/searchAddressFragment" />
+        <action
+            android:id="@+id/action_addressFragment_to_cart_fragment"
+            app:destination="@id/cart_fragment" />
     </fragment>
     <fragment
         android:id="@+id/favouritesFragment"
@@ -265,4 +297,16 @@
         android:name="com.app.delmon.fragment.WebAppsFragment"
         android:label="fragment_web_apps"
         tools:layout="@layout/fragment_web_apps" />
+    <fragment
+        android:id="@+id/paymentFragment"
+        android:name="com.app.delmon.fragment.PaymentFragment"
+        android:label="fragment_payment"
+        tools:layout="@layout/fragment_payment" >
+        <action
+            android:id="@+id/action_paymentFragment_to_order_fragment"
+            app:destination="@id/order_fragment" />
+        <action
+            android:id="@+id/action_paymentFragment_to_walletFragment"
+            app:destination="@id/walletFragment" />
+    </fragment>
 </navigation>
